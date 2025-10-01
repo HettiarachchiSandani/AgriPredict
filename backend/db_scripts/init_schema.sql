@@ -1,12 +1,13 @@
+
 -- 1. Role
 CREATE TABLE Role (
     RoleID VARCHAR(50) PRIMARY KEY,
     RoleName VARCHAR(50) NOT NULL
 );
 
--- 2. User
+-- 2. User (UUID instead of VARCHAR)
 CREATE TABLE "User" (
-    UserID VARCHAR(50) PRIMARY KEY,
+    UserID UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     RoleID VARCHAR(50) NOT NULL REFERENCES Role(RoleID),
     FirstName VARCHAR(100) NOT NULL,
     LastName VARCHAR(100),
@@ -20,7 +21,7 @@ CREATE TABLE "User" (
 -- 3. Owner
 CREATE TABLE Owner (
     OwnerID VARCHAR(50) PRIMARY KEY,
-    UserID VARCHAR(50) UNIQUE NOT NULL REFERENCES "User"(UserID),
+    UserID UUID UNIQUE NOT NULL REFERENCES "User"(UserID),
     FarmName VARCHAR(150),
     Address TEXT
 );
@@ -29,13 +30,13 @@ CREATE TABLE Owner (
 CREATE TABLE Manager (
     ManagerID VARCHAR(50) PRIMARY KEY,
     OwnerID VARCHAR(50) NOT NULL REFERENCES Owner(OwnerID),
-    UserID VARCHAR(50) UNIQUE NOT NULL REFERENCES "User"(UserID)
+    UserID UUID UNIQUE NOT NULL REFERENCES "User"(UserID)
 );
 
 -- 5. Buyer
 CREATE TABLE Buyer (
     BuyerID VARCHAR(50) PRIMARY KEY,
-    UserID VARCHAR(50) UNIQUE NOT NULL REFERENCES "User"(UserID),
+    UserID UUID UNIQUE NOT NULL REFERENCES "User"(UserID),
     Address TEXT,
     Company VARCHAR(150)
 );
@@ -118,7 +119,7 @@ CREATE TABLE Reports (
     ReportID VARCHAR(50) PRIMARY KEY,
     BatchID VARCHAR(50) NOT NULL REFERENCES Batch(BatchID),
     Type VARCHAR(50),
-    GeneratedBy VARCHAR(50) REFERENCES "User"(UserID),
+    GeneratedBy UUID REFERENCES "User"(UserID),
     GeneratedDate DATE DEFAULT CURRENT_DATE,
     FilePath TEXT
 );
@@ -150,7 +151,7 @@ CREATE TABLE Records (
 -- 17. Notifications
 CREATE TABLE Notifications (
     NotificationID VARCHAR(50) PRIMARY KEY,
-    UserID VARCHAR(50) NOT NULL REFERENCES "User"(UserID),
+    UserID UUID NOT NULL REFERENCES "User"(UserID),
     Message TEXT NOT NULL,
     Type VARCHAR(50),
     CreateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -160,7 +161,7 @@ CREATE TABLE Notifications (
 -- 18. Settings
 CREATE TABLE Settings (
     SettingsID VARCHAR(50) PRIMARY KEY,
-    UserID VARCHAR(50) NOT NULL REFERENCES "User"(UserID),
+    UserID UUID NOT NULL REFERENCES "User"(UserID),
     ParameterName VARCHAR(100),
     ParameterValue VARCHAR(100),
     UpdateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
