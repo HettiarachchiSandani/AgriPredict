@@ -25,6 +25,11 @@ SECRET_KEY = 'django-insecure-y=v8ou3l#)q6w$jer_0cf+t&xz7!2h2^$5x1zd1zeg+5@^w1d%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+
 ALLOWED_HOSTS = []
 
 
@@ -84,10 +89,18 @@ WSGI_APPLICATION = 'agripredict_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+        'OPTIONS': {
+            'sslmode': 'require',  # required for Supabase
+        },
     }
 }
+
 
 
 # Password validation
