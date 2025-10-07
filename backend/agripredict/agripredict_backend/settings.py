@@ -89,6 +89,10 @@ WSGI_APPLICATION = 'agripredict_backend.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    },
+    'supabase': {  
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.getenv('DB_NAME'),
         'USER': os.getenv('DB_USER'),
@@ -97,8 +101,9 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT'),
         'OPTIONS': {
             'sslmode': 'require',  # required for Supabase
+            'sslmode': 'require',
         },
-    }
+    },
 }
 
 
@@ -143,3 +148,12 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'core.User'
+
+SUPABASE_URL = "https://zxkuvipjykldlxbkurlb.supabase.co"
+SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp4a3V2aXBqeWtsZGx4Ymt1cmxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTkyMzA5NDYsImV4cCI6MjA3NDgwNjk0Nn0.x4Hniz1vrogyj9-8XYgrHGOb-ZzMhqTRl6hMGRcgV6Y"
+
+DATABASE_ROUTERS = ['core.db_router.SupabaseRouter']
+
+
