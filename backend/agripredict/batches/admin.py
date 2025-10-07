@@ -1,3 +1,16 @@
 from django.contrib import admin
+from .models import Breed, Batch, DailyOperations
 
-# Register your models here.
+@admin.register(Breed)
+class BreedAdmin(admin.ModelAdmin):
+    list_display = ('breedid', 'breedname', 'eggtype', 'avglifespan', 'avgdailyeggrate')
+
+@admin.register(Batch)
+class BatchAdmin(admin.ModelAdmin):
+    list_display = ('batchid', 'breedid', 'startdate', 'initialcount', 'currentcount', 'status')
+    list_filter = ('status', 'breedid')
+
+@admin.register(DailyOperations)
+class DailyOperationsAdmin(admin.ModelAdmin):
+    list_display = ('operationid', 'batchid', 'date', 'feedusage', 'eggcount', 'mortalitycount', 'waterused')
+    list_filter = ('batchid', 'date')
