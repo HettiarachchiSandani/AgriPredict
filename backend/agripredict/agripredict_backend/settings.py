@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'core',
     'owners',
     'batches',
-    'feed',
+    'feed.apps.FeedConfig',
     'orders',
     'predictions',
     'reports',
