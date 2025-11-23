@@ -1,3 +1,14 @@
 from django.contrib import admin
+from .models import Buyer, Order, OrderBatch
 
-# Register your models here.
+@admin.register(Buyer)
+class BuyerAdmin(admin.ModelAdmin):
+    list_display = ('buyerid', 'userid', 'company', 'address')
+
+@admin.register(Order)
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('orderid', 'buyerid', 'urgent', 'ordereddate', 'requesteddate', 'status')
+
+@admin.register(OrderBatch)
+class OrderBatchAdmin(admin.ModelAdmin):
+    list_display = ('batch_order_id', 'orderid', 'batchid', 'quantity')

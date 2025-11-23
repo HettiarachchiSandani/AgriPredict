@@ -1,17 +1,29 @@
 from django.contrib import admin
-from .models import User, Role
+from .models import User, Role, Settings, Notifications
 
-# User admin
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('UserID', 'FirstName', 'LastName', 'RoleID')
-    search_fields = ('FirstName', 'LastName')
-    list_filter = ('RoleID',)
-
-# Role admin
+@admin.register(Role)
 class RoleAdmin(admin.ModelAdmin):
-    list_display = ('RoleID', 'RoleName')
-    search_fields = ('RoleName',)
+    list_display = ('roleid', 'rolename')
+    search_fields = ('roleid', 'rolename')
 
-# Register models with admin
-admin.site.register(User, UserAdmin)
-admin.site.register(Role, RoleAdmin)
+
+@admin.register(User)
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('userid', 'firstname', 'lastname', 'email', 'role', 'is_staff', 'is_active')
+    list_filter = ('role', 'is_staff', 'is_active')
+    search_fields = ('firstname', 'lastname', 'email')
+    ordering = ('userid',)
+
+
+@admin.register(Settings)
+class SettingsAdmin(admin.ModelAdmin):
+    list_display = ('settingsid', 'user', 'parametername', 'parametervalue', 'updateat')
+    list_filter = ('user',)
+    search_fields = ('parametername', 'parametervalue')
+
+
+@admin.register(Notifications)
+class NotificationsAdmin(admin.ModelAdmin):
+    list_display = ('notificationid', 'user', 'message', 'type', 'createat', 'isread')
+    list_filter = ('user', 'isread')
+    search_fields = ('message',)

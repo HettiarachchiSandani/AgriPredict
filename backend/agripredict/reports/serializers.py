@@ -1,14 +1,12 @@
 from rest_framework import serializers
-from .models import Reports, Records
+from .models import Record, Report
 
-
-class ReportsSerializer(serializers.ModelSerializer):
+class ReportSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Reports
+        model = Report
         fields = '__all__'
 
-
-class RecordsSerializer(serializers.ModelSerializer):
+class RecordSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Records
+        model = Record
         fields = '__all__'

@@ -8,9 +8,7 @@ class BreedAdmin(admin.ModelAdmin):
 @admin.register(Batch)
 class BatchAdmin(admin.ModelAdmin):
     list_display = ('batchid', 'breedid', 'startdate', 'initialcount', 'currentcount', 'status')
-    list_filter = ('status', 'breedid')
 
 @admin.register(DailyOperations)
 class DailyOperationsAdmin(admin.ModelAdmin):
-    list_display = ('operationid', 'batchid', 'date', 'feedusage', 'eggcount', 'mortalitycount', 'waterused')
-    list_filter = ('batchid', 'date')
+    list_display = ('operationid', 'batchid', 'date', 'feedusage', 'eggcount', 'mortalitycount', 'waterused', 'notes')
