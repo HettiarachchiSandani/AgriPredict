@@ -15,30 +15,40 @@ class Breed(models.Model):
 
 
 class Batch(models.Model):
+    class BatchStatus(models.TextChoices):
+        ACTIVE = 'Active', 'Active'
+        COMPLETED = 'Completed', 'Completed'
+        TERMINATED = 'Terminated', 'Terminated'
+        ARCHIVED = 'Archived', 'Archived'
+
     batchid = models.CharField(max_length=50, primary_key=True)
-    breedid = models.ForeignKey(
+    breed = models.ForeignKey(
         Breed, 
         on_delete=models.CASCADE,
-        db_column='breedid'  
+        db_column='breedid'
     )
     startdate = models.DateField()
     initialcount = models.IntegerField()
     currentcount = models.IntegerField(null=True, blank=True)
-    status = models.CharField(max_length=50, null=True, blank=True)
+    status = models.CharField(
+        max_length=20,
+        choices=BatchStatus.choices,
+        default=BatchStatus.ACTIVE
+    )
 
     class Meta:
         db_table = 'batch' 
 
     def __str__(self):
-        return self.batchid
+        return f"{self.batchid} ({self.status})"
 
 
 class DailyOperations(models.Model):
     operationid = models.CharField(max_length=50, primary_key=True)
-    batchid = models.ForeignKey(
+    batch = models.ForeignKey(
         Batch, 
         on_delete=models.CASCADE,
-        db_column='batchid'  
+        db_column='batchid'
     )
     date = models.DateField()
     feedusage = models.IntegerField(null=True, blank=True)
@@ -51,4 +61,4 @@ class DailyOperations(models.Model):
         db_table = 'dailyoperations'  
 
     def __str__(self):
-        return f"{self.operationid} - {self.batchid.batchid}"
+        return f"{self.operationid} - {self.batch.batchid}"
