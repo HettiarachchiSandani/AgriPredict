@@ -1,9 +1,13 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import RoleViewSet, UserViewSet, SettingsViewSet, NotificationsViewSet
+
+router = DefaultRouter()
+router.register('roles', RoleViewSet)
+router.register('users', UserViewSet)
+router.register('settings', SettingsViewSet)
+router.register('notifications', NotificationsViewSet)
 
 urlpatterns = [
-    path('', views.login_view, name='home'),  # root redirects to login
-    path('login/', views.login_view, name='login'),
-    path('dashboard/', views.dashboard_view, name='dashboard'),
-    path('logout/', views.logout_view, name='logout'),
+    path('', include(router.urls)),
 ]

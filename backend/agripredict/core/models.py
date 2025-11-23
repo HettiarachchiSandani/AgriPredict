@@ -35,3 +35,40 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return f'{self.FirstName} {self.LastName}'
+
+class Settings(models.Model):
+    settingsid = models.CharField(max_length=50, primary_key=True)
+    userid = models.ForeignKey(User, on_delete=models.CASCADE, db_column='userid')
+    parametername = models.CharField(max_length=100, null=True, blank=True)
+    parametervalue = models.CharField(max_length=100, null=True, blank=True)
+    updateat = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'settings'
+
+    def __str__(self):
+        return f"{self.parametername or 'Setting'} ({self.settingsid})"
+
+class Notifications(models.Model):
+    class NotificationType(models.TextChoices):
+        INFO = 'INFO', 'Info'
+        ALERT = 'ALERT', 'Alert'
+        WARNING = 'WARNING', 'Warning'
+
+    notificationid = models.CharField(max_length=50, primary_key=True)
+    userid = models.ForeignKey(User, on_delete=models.CASCADE, db_column='userid')
+    message = models.TextField()
+    type = models.CharField(
+        max_length=20,
+        choices=NotificationType.choices,
+        null=True,
+        blank=True
+    )
+    createat = models.DateTimeField(auto_now_add=True)
+    isread = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = 'notifications'
+
+    def __str__(self):
+        return f"Notification {self.notificationid} for {self.userid.UserID}"
