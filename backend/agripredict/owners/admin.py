@@ -7,7 +7,7 @@ class OwnerAdmin(admin.ModelAdmin):
 
 @admin.register(Manager)
 class ManagerAdmin(admin.ModelAdmin):
-    list_display = ('managerid', 'ownerid', 'userid')
+    list_display = ('managerid', 'userid')
 
 @admin.register(OwnerManagerBatch)
 class OwnerManagerBatchAdmin(admin.ModelAdmin):
