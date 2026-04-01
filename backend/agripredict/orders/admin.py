@@ -7,7 +7,7 @@ class BuyerAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('orderid', 'buyerid', 'urgent', 'ordereddate', 'requesteddate', 'status')
+    list_display = ('orderid', 'buyerid', 'ordereddate', 'requesteddate', 'status', 'breedid', 'note', 'quantity', 'accepted', 'completed')
 
 @admin.register(OrderBatch)
 class OrderBatchAdmin(admin.ModelAdmin):
