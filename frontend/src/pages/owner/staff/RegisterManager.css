@@ -1,0 +1,104 @@
+.manager-container {
+  max-width: 800px;
+  width: 80%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.manager-title {
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
+
+.manager-form label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.manager-form input,
+.manager-form select,
+.manager-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.manager-form textarea {
+  resize: none;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 2px;
+  display: block;
+}
+
+.form-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.manager-save-btn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.manager-save-btn:hover {
+  background: #256828;
+}
+
+.manager-cancel-btn {
+  background: #f44336;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.manager-cancel-btn:hover {
+  background: #d32f2f;
+}
+
+.password-container {
+  position: relative;
+}
+
+.password-container input {
+  padding-right: 42px;
+}
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  color: #757575;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.password-toggle-icon svg {
+  font-size: 20px;
+}
+
+.password-toggle-icon:hover {
+  color: #424242;
+}

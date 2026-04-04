@@ -1,0 +1,176 @@
+.order-history-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 1200px;
+  width: 99%;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  padding: 20px 0;
+}
+
+.order-history-header h1 {
+  color: #2E7D32;
+  margin-bottom: 20px;
+}
+
+.order-history-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.order-history-filters .filter-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.order-history-filters label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  color: #555;
+}
+
+.order-history-filters input,
+.order-history-filters select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.order-history-filters input:focus,
+.order-history-filters select:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+.order-history-table-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+.order-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.order-history-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  color: #555;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.order-history-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+  font-size: 14px;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-badge.completed {
+  background: #C8E6C9;
+  color: #2E7D32;
+}
+
+.status-badge.rejected {
+  background: #FFCDD2;
+  color: #C62828;
+}
+
+.actions-col {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  border: none;
+  background: #f5f5f5;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: #e0e0e0;
+}
+
+@media (max-width: 768px) {
+  .order-history-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .order-history-table th,
+  .order-history-table td {
+    padding: 10px 8px;
+  }
+}
+
+.buyers-tabs {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 2px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.buyer-tab {
+  padding: 10px 10px;
+  text-decoration: none;
+  color: #555;
+  background: #f4f4f4;
+  border-radius: 8px 8px 0 0;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.buyer-tab:hover {
+  background: linear-gradient(135deg, #66bb6a, #2e7d32);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.buyer-tab.active {
+  background: #2E7D32 !important;
+  color: #fff !important;
+  border-bottom: 2px solid #2E7D32;
+  font-weight: 600;
+  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+  
+}

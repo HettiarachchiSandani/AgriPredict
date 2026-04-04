@@ -1,0 +1,90 @@
+.request-page {
+  max-width: 800px;
+  width: 80%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.request-page h1 {
+  margin-bottom: 20px;
+  color: #2E7D32;
+}
+
+.form-row {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-row label {
+  font-weight: 600;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 2px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-actions2 {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-actions2 button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.form-actions2 button[type="submit"] {
+  background: #4caf50;
+  color: #fff;
+  transition: 0.2s ease;
+}
+
+.form-actions2 button[type="submit"]:hover {
+  background: #256828;
+}
+
+.form-actions2 button[type="button"] {
+  background: #f44336;
+  color: #fff;
+  transition: 0.2s ease;
+}
+
+.form-actions2 button[type="button"]:hover {
+  background: #d32f2f;
+}
+
+@media (max-width: 500px) {
+  .request-page {
+    width: 95%;
+    padding: 15px 20px;
+  }
+
+  .form-actions2 {
+    flex-direction: column;
+    gap: 10px;
+  }
+}

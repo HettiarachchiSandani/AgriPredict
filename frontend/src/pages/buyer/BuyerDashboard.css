@@ -1,0 +1,118 @@
+.buyer-dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  font-family: 'Segoe UI', sans-serif;
+  width: 100%;
+  padding-right: 20px;
+  box-sizing: border-box;
+}
+
+.buyer-stats-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.buyer-stat-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  border: 1px solid #e9e9e9;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+.buyer-stat-card h3 {
+  font-size: 15px;
+  color: #6d6d6d;
+  margin-bottom: 6px;
+}
+
+.buyer-stat-card p {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 0;
+  color: #2E7D32;
+}
+
+.buyer-recent-orders h2 {
+  margin-bottom: 15px;
+  color: #2E7D32;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.buyer-orders-table-container {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+  overflow-x: auto;
+  width: 100%;
+}
+
+.buyer-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.buyer-orders-table th,
+.buyer-orders-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.buyer-orders-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #555;
+}
+
+.buyer-status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+}
+
+.buyer-status-badge.pending {
+  background: #FFF9C4;
+  color: #F57F17;
+}
+
+.buyer-status-badge.confirmed {
+  background: #BBDEFB;
+  color: #1565C0;
+}
+
+.buyer-status-badge.completed {
+  background: #C8E6C9;
+  color: #2E7D32;
+}
+
+.buyer-status-badge.canceled {
+  background: #FFCDD2;
+  color: #C62828;
+}
+
+@media (max-width: 1200px) {
+  .buyer-stats-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .buyer-stats-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .buyer-orders-table-container {
+    padding: 15px;
+  }
+}
