@@ -1,0 +1,156 @@
+.records-page {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  color: #333;
+  max-width: 1200px; 
+  width: 99%;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif
+}
+
+.records-header{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.records-header h1 {
+  color: #2E7D32;
+  margin-bottom: 20px;
+}
+
+.records-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.records-filters label{
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.records-filters .filter-item{
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.records-filters input,
+.records-filters select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  border-radius: 8px;
+  color: #333;
+  flex: 1 1 auto; 
+  min-width: 180px;
+}
+
+.records-filters input:focus,
+.records-filters select:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+.reset-btn {
+  flex: 0 0 auto; 
+  padding: 10px 18px;
+  background: #2E7D32;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.reset-btn:hover {
+  background: #256828;
+  transform: translateY(-1px);
+}
+
+.records-table-container {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.records-table th {
+  padding: 12px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  color: #555;
+  text-align: left;
+}
+
+.records-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #eee;
+  color: #444;
+}
+
+.records-table tr:hover {
+  background: rgba(46,125,50,0.08);
+  cursor: pointer;
+}
+
+.hash-cell {
+  font-family: monospace;
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.no-records {
+  text-align: center;
+  padding: 25px;
+  color: #666;
+}
+
+.record-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 380px;
+  height: 100%;
+  background: #fff;
+  box-shadow: -4px 0 16px rgba(0,0,0,0.12);
+  z-index: 1000;
+  padding: 25px;
+  overflow-y: auto;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.close-btn {
+  font-size: 26px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.panel-body p {
+  margin-bottom: 12px;
+  color: #444;
+  line-height: 1.7;
+}
