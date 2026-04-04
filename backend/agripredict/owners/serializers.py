@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Owner, Manager, OwnerManagerBatch, OwnerManagerFeedstock
+from .models import Owner, Manager
 from core.serializers import UserSerializer
 
 class OwnerSerializer(serializers.ModelSerializer):
@@ -17,15 +17,3 @@ class ManagerSerializer(serializers.ModelSerializer):
         model = Manager
         fields = ['managerid', 'userid', 'user_details']
         read_only_fields = ('managerid', 'userid')
-
-class OwnerManagerBatchSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OwnerManagerBatch
-        fields = '__all__'
-        read_only_fields = ('id',)
-
-class OwnerManagerFeedstockSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = OwnerManagerFeedstock
-        fields = '__all__'
-        read_only_fields = ('id',)

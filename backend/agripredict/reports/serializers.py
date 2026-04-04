@@ -11,7 +11,7 @@ class ReportSerializer(serializers.ModelSerializer):
 class RecordSerializer(serializers.ModelSerializer):
     batch_name = serializers.CharField(source='batchid.batchname', read_only=True)
     operation_date = serializers.DateField(source='operationid.date', read_only=True)
-    entered_by_name = serializers.CharField(source='operationid.entered_by_id.username', read_only=True)
+    entered_by_name = serializers.SerializerMethodField()
 
     class Meta:
         model = Records
@@ -26,3 +26,9 @@ class RecordSerializer(serializers.ModelSerializer):
             "operation_date",
             "entered_by_name",
         ]
+
+    def get_entered_by_name(self, obj):
+        try:
+            return obj.operationid.entered_by.email
+        except AttributeError:
+            return None
