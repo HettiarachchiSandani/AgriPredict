@@ -4,12 +4,10 @@ from django.db import transaction
 from rest_framework.permissions import IsAuthenticated
 from core.permission import IsOwner
 
-from .models import Owner, Manager, OwnerManagerBatch, OwnerManagerFeedstock
+from .models import Owner, Manager
 from .serializers import (
     OwnerSerializer,
-    ManagerSerializer,
-    OwnerManagerBatchSerializer,
-    OwnerManagerFeedstockSerializer
+    ManagerSerializer
 )
 from core.serializers import UserSerializer
 
@@ -28,7 +26,6 @@ class ManagerViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         data = request.data.copy()
 
-        # Validate required fields
         if not data.get("email"):
             return Response({"email": "email is required"}, status=400)
         if not data.get("password"):
@@ -86,13 +83,3 @@ class ManagerViewSet(viewsets.ModelViewSet):
             )
         except Exception as e:
             return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-class OwnerManagerBatchViewSet(viewsets.ModelViewSet):
-    queryset = OwnerManagerBatch.objects.all()
-    serializer_class = OwnerManagerBatchSerializer
-    permission_classes = [IsAuthenticated, IsOwner] 
-
-class OwnerManagerFeedstockViewSet(viewsets.ModelViewSet):
-    queryset = OwnerManagerFeedstock.objects.all()
-    serializer_class = OwnerManagerFeedstockSerializer
-    permission_classes = [IsAuthenticated, IsOwner] 
