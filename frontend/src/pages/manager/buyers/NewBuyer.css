@@ -1,0 +1,76 @@
+.buyer-container {
+  max-width: 800px;
+  width: 80%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.buyer-title {
+  color: #2e7d32;
+  margin-bottom: 20px;
+}
+
+.buyer-form label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+.buyer-form input,
+.buyer-form select,
+.buyer-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 2px;
+  display: block;
+}
+
+.form-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.buyer-save-btn {
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.buyer-save-btn:hover {
+  background: #256828; 
+}
+
+.buyer-cancel-btn {
+  background: #f44336;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.buyer-cancel-btn:hover {
+  background: #d32f2f;
+}
