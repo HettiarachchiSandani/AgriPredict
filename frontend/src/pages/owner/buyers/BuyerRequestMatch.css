@@ -1,0 +1,371 @@
+.buyer-request-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 1200px;
+  width: 99%;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  padding: 20px 0;
+}
+
+.buyer-request-header h1 {
+  color: #2E7D32;
+  margin-bottom: 20px;
+}
+
+.buyer-request-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.buyer-request-filters .filter-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.buyer-request-filters label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+  color: #555;
+}
+
+.buyer-request-filters input,
+.buyer-request-filters select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s ease;
+}
+
+.buyer-request-filters input:focus,
+.buyer-request-filters select:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+.buyer-request-table-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+.buyer-request-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.buyer-request-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  color: #555;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.buyer-request-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+  font-size: 14px;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-badge.pending {
+  background: #FFE0B2;
+  color: #FF9800;
+}
+
+.status-badge.completed {
+  background: #C8E6C9;
+  color: #2E7D32;
+}
+
+.status-badge.canceled {
+  background: #FFCDD2;
+  color: #C62828;
+}
+
+.status-badge.confirmed {
+  background: #BBDEFB;  
+  color: #1565C0;     
+}
+
+.actions-col {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  border: none;
+  background: #f5f5f5;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: #e0e0e0;
+}
+
+.request-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 20px; 
+}
+
+.modal-content {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 450px;
+  max-width: 100%;
+  max-height: 90%;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column; 
+  gap: 15px;
+  position: relative;
+}
+
+.modal-content h2 {
+  margin: 0 0 10px 0;
+  color: #2E7D32;
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.modal-content label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.modal-content input:focus,
+.modal-content select:focus,
+.modal-content textarea:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.modal-actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.modal-actions .approve-btn {
+  background: #1976d2;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.modal-actions .approve-btn:hover {
+  background: #115293;
+}
+
+.modal-actions .reject-btn {
+  background: #f44336;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.modal-actions .reject-btn:hover {
+  background: #d32f2f;
+}
+
+.modal-actions .complete-btn {
+  background: #2e7d32;
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.modal-actions .complete-btn:hover {
+  background: #256828;
+}
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #555;
+  background: none;
+}
+
+button:disabled {
+  background-color: #ccc;    
+  color: #666;                  
+  cursor: not-allowed;          
+  opacity: 0.6;
+  filter: blur(0.5px); 
+}
+
+.highlight-section {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.highlight-card {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.highlight-card span {
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+}
+
+.highlight-card h3 {
+  margin: 5px 0 0 0;
+  font-size: 20px;
+}
+
+.highlight-card.quantity {
+  background: #FFF3E0;
+  color: #EF6C00;
+}
+
+.highlight-card.available {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.highlight-card.predicted {
+  background: #E3F2FD;
+  color: #1565C0;
+}
+
+@media (max-width: 500px) {
+  .modal-content {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+.buyers-tabs {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 2px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.buyer-tab {
+  padding: 10px 10px;
+  text-decoration: none;
+  color: #555;
+  background: #f4f4f4;
+  border-radius: 8px 8px 0 0;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.buyer-tab:hover {
+  background: linear-gradient(135deg, #66bb6a, #2e7d32);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.buyer-tab.active {
+  background: #2E7D32 !important;
+  color: #fff !important;
+  border-bottom: 2px solid #2E7D32;
+  font-weight: 600;
+  box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.prediction-missing {
+  color: #999;
+  font-style: italic;
+}
+
+.prediction-warning {
+  color: #d32f2f;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .buyer-request-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buyer-request-table th,
+  .buyer-request-table td {
+    padding: 10px 8px;
+  }
+}

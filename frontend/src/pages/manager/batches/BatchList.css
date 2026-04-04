@@ -1,0 +1,193 @@
+.batch-management {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  color: #333;
+  max-width: 1200px; 
+  width: 99%;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.batch-header {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.batch-header h1 {
+  color: #2E7D32;
+  margin-bottom: 20px;
+}
+
+.top-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.top-controls .search-input,
+.top-controls .filter-select {
+  min-width: 180px;
+  flex: 1 1 auto;
+}
+
+.top-controls .add-batch-btn {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 18px;
+  background: #2E7D32;
+  color: white;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+  white-space: nowrap;
+}
+
+.add-batch-btn:hover {
+  background: #256828;
+  transform: translateY(-1px);
+}
+
+.search-input {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  border-radius: 8px;
+  color: #333;
+}
+
+.search-input::placeholder {
+  color: #999;
+}
+
+.search-input:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+.filter-select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  border-radius: 8px;
+  color: #333;
+}
+
+.filter-select:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+.batch-table-container {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.batch-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.batch-table th {
+  text-align: left;
+  padding: 12px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  color: #555;
+}
+
+.batch-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.highlight {
+  font-weight: 600;
+  color: #2E7D32;
+}
+
+.badge-type {
+  padding: 4px 8px;
+  background: rgba(76, 175, 80, 0.1);
+  color: #2E7D32;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-active {
+  background: rgba(76, 175, 80, 0.15);
+  color: #2E7D32;
+}
+
+.status-completed {
+  background: rgba(0,0,0,0.1);
+  color: #555;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.action-buttons button {
+  padding: 6px 8px;
+  border: none;
+  background: #f5f5f5;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-buttons .delete-btn {
+  color: #F44336;
+}
+
+.action-buttons button:hover {
+  background: #e8f5e9;
+  color: #2E7D32;
+  transform: scale(1.1);
+}
+
+.action-buttons button.delete-btn:hover {
+  background: #fce4e4;
+  color: #D32F2F;
+  transform: scale(1.1);
+}
+
+.no-results {
+  text-align: center;
+  padding: 25px;
+  color: #666;
+}
+
+.batch-footer {
+  color: #555;
+  font-size: 14px;
+}
