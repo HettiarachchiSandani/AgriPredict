@@ -17,7 +17,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 
 egg_model = joblib.load(os.path.join(MODEL_DIR, "egg_model.pkl"))
-mortality_model = joblib.load(os.path.join(MODEL_DIR, "mortality_model.pkl"))
+mortality_model = joblib.load(os.path.join(MODEL_DIR, "mortality_cb_model.pkl"))
 batch_encoder = joblib.load(os.path.join(MODEL_DIR, "batch_encoder_v1.pkl"))
 
 class PredictionViewSet(viewsets.ModelViewSet):
@@ -155,7 +155,11 @@ class PredictionViewSet(viewsets.ModelViewSet):
             try:
                 explainer_egg = shap.TreeExplainer(egg_model)
                 shap_values_egg = explainer_egg.shap_values(X_egg)
-                result["shap_eggs"] = dict(zip(egg_features, shap_values_egg[0]))
+                shap_vals = shap_values_egg
+                if isinstance(shap_vals, list):
+                    shap_vals = shap_vals[0]
+
+                result["shap_eggs"] = dict(zip(egg_features, shap_vals[0]))
             except:
                 result["shap_eggs"] = {}
 
