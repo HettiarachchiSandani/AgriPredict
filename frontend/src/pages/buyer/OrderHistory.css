@@ -1,0 +1,141 @@
+.buyershistory-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 1200px;
+  width: 99%;
+  margin: 0 auto;
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.buyershistory-header h1 {
+  color: #2E7D32;
+  margin-bottom: 20px;
+}
+
+.buyershistory-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  border-radius: 12px;
+}
+
+.buyershistory-filters select {
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.2s ease;
+  min-width: 180px;
+}
+
+.buyershistory-filters select:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
+}
+
+.buyershistory-table-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+.buyershistory-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px;
+}
+
+.buyershistory-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  color: #555;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.buyershistory-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+  color: #555;
+  font-size: 14px;
+}
+
+.status-badge1 {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-badge1.pending {
+  background: #FFF9C4;
+  color: #F57F17;
+}
+
+.status-badge1.confirmed {
+  background: #BBDEFB;
+  color: #1565C0;
+}
+
+.status-badge1.completed {
+  background: #C8E6C9;
+  color: #2E7D32;
+}
+
+.status-badge1.canceled {
+  background: #FFCDD2;
+  color: #C62828;
+}
+
+/* Actions column */
+.actions-col {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.icon-btn {
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover:not(:disabled) {
+  background: #e0e0e0;
+}
+
+.icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  color: #C62828;
+}
+
+@media (max-width: 768px) {
+  .buyershistory-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buyershistory-table th,
+  .buyershistory-table td {
+    padding: 10px 8px;
+  }
+}
