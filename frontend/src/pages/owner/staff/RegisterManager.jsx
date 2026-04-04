@@ -53,8 +53,29 @@ const NewManager = ({ managers, setManagers }) => {
     if (loading) return;
 
     const formErrors = {};
-    if (!(formData.email || "").trim()) formErrors.email = "Email is required";
-    if (!(formData.password || "").trim()) formErrors.password = "Password is required";
+    if (!(formData.firstname || "").trim())
+      formErrors.firstname = "First name is required";
+
+    if (!(formData.lastname || "").trim())
+      formErrors.lastname = "Last name is required";
+
+    if (!(formData.gender || "").trim())
+      formErrors.gender = "Gender is required";
+
+    if (!(formData.dob || "").trim())
+      formErrors.dob = "Date of birth is required";
+
+    if (!(formData.phonenumber || "").trim())
+      formErrors.phonenumber = "Phone number is required";
+
+    if (!(formData.nic || "").trim())
+      formErrors.nic = "NIC is required";
+
+    if (!(formData.email || "").trim())
+      formErrors.email = "Email is required";
+
+    if (!(formData.password || "").trim())
+      formErrors.password = "Password is required";
 
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
@@ -106,115 +127,144 @@ const NewManager = ({ managers, setManagers }) => {
       <h1 className="manager-title">Register Manager</h1>
 
       <form className="manager-form" onSubmit={handleSubmit}>
-        <label>First Name</label>
-        <input
-          type="text"
-          name="firstname"
-          value={formData.firstname}
-          onChange={handleChange}
-          placeholder="Enter first name"
-        />
-        {errors.firstname && <span className="error">{errors.firstname}</span>}
-
-        <label>Last Name</label>
-        <input
-          type="text"
-          name="lastname"
-          value={formData.lastname}
-          onChange={handleChange}
-          placeholder="Enter last name"
-        />
-
-        <label>Gender</label>
-        <select name="gender" value={formData.gender} onChange={handleChange}>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-
-        <label>Date of Birth</label>
-        <input
-          type="date"
-          name="dob"
-          value={formData.dob}
-          onChange={handleChange}
-        />
-        {errors.dob && <span className="error">{errors.dob}</span>}
-
-        <label>NIC</label>
-        <input
-          type="text"
-          name="nic"
-          value={formData.nic}
-          onChange={handleChange}
-          placeholder="NIC number"
-        />
-        {errors.nic && <span className="error">{errors.nic}</span>}
-
-        <label>Phone Number</label>
-        <input
-          type="text"
-          name="phonenumber"
-          value={formData.phonenumber}
-          onChange={handleChange}
-          placeholder="07X XXX XXXX"
-        />
-        {errors.phonenumber && <span className="error">{errors.phonenumber}</span>}
-
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="example@email.com"
-        />
-        {errors.email && <span className="error">{errors.email}</span>}
-
-        <label>Password</label>
-        <div className="password-container">
+          <label htmlFor="firstname">First Name</label>
           <input
-            type={showPassword ? "text" : "password"}
-            name="password"
-            value={formData.password}
+            id="firstname"
+            type="text"
+            name="firstname"
+            value={formData.firstname}
             onChange={handleChange}
-            placeholder="Enter password"
+            placeholder="Enter first name"
+            required
           />
-          <span
-            className="password-toggle-icon"
-            onClick={() => setShowPassword((p) => !p)}
+          {errors.firstname && <span className="error">{errors.firstname}</span>}
+
+          <label htmlFor="lastname">Last Name</label>
+          <input
+            id="lastname"
+            type="text"
+            name="lastname"
+            value={formData.lastname}
+            onChange={handleChange}
+            placeholder="Enter last name"
+            required
+          />
+          {errors.lastname && <span className="error">{errors.lastname}</span>}
+
+          <label htmlFor="gender">Gender</label>
+          <select
+            id="gender"
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            required
           >
-            {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
-          </span>
-        </div>
-        {errors.password && <span className="error">{errors.password}</span>}
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          {errors.gender && <span className="error">{errors.gender}</span>}
 
-        <label>Status</label>
-        <select name="status" value={formData.status} onChange={handleChange}>
-          <option value="Active">Active</option>
-          <option value="Inactive">Inactive</option>
-        </select>
+          <label htmlFor="dob">Date of Birth</label>
+          <input
+            id="dob"
+            type="date"
+            name="dob"
+            value={formData.dob}
+            onChange={handleChange}
+            required
+          />
+          {errors.dob && <span className="error">{errors.dob}</span>}
 
-        <label>Note</label>
-        <textarea
-          name="note"
-          value={formData.note}
-          onChange={handleChange}
-          placeholder="Additional notes (optional)"
-        />
+          <label htmlFor="nic">NIC</label>
+          <input
+            id="nic"
+            type="text"
+            name="nic"
+            value={formData.nic}
+            onChange={handleChange}
+            placeholder="NIC number"
+            required
+          />
+          {errors.nic && <span className="error">{errors.nic}</span>}
 
-        <div className="form-buttons">
-          <button
-            type="button"
-            className="manager-cancel-btn"
-            onClick={() => navigate("/owner/staff")}
+          <label htmlFor="phonenumber">Phone Number</label>
+          <input
+            id="phonenumber"
+            type="text"
+            name="phonenumber"
+            value={formData.phonenumber}
+            onChange={handleChange}
+            placeholder="07X XXX XXXX"
+            required
+          />
+          {errors.phonenumber && <span className="error">{errors.phonenumber}</span>}
+
+          <label htmlFor="email">Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="example@email.com"
+            required
+          />
+          {errors.email && <span className="error">{errors.email}</span>}
+
+          <label htmlFor="password">Password</label>
+          <div className="password-container">
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter password"
+              required
+            />
+            <span
+              className="password-toggle-icon"
+              onClick={() => setShowPassword((p) => !p)}
+            >
+              {showPassword ? <MdVisibilityOff /> : <MdVisibility />}
+            </span>
+          </div>
+          {errors.password && <span className="error">{errors.password}</span>}
+
+          <label htmlFor="status">Status</label>
+          <select
+            id="status"
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            required
           >
-            Cancel
-          </button>
-          <button type="submit" className="manager-save-btn" disabled={loading}>
-            {loading ? "Saving..." : "Save"}
-          </button>
-        </div>
-      </form>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+
+          <label htmlFor="note">Note</label>
+          <textarea
+            id="note"
+            name="note"
+            value={formData.note}
+            onChange={handleChange}
+            placeholder="Additional notes (optional)"
+          />
+
+          <div className="form-buttons">
+            <button
+              type="button"
+              className="manager-cancel-btn"
+              onClick={() => navigate("/owner/staff")}
+            >
+              Cancel
+            </button>
+            <button type="submit" className="manager-save-btn" disabled={loading}>
+              {loading ? "Saving..." : "Save"}
+            </button>
+          </div>
+        </form>
     </div>
   );
 };

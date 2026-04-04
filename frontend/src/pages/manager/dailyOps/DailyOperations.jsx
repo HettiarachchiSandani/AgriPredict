@@ -198,10 +198,11 @@ const DailyOperation = () => {
     <div className="daily-operation">
       <h1>Daily Farm Operations</h1>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} noValidate>
         <div className="form-row">
-          <label>Date</label>
+          <label htmlFor="date">Date</label>
           <input
+            id="date"
             type="date"
             name="date"
             value={formData.date}
@@ -213,8 +214,14 @@ const DailyOperation = () => {
         </div>
 
         <div className="form-row">
-          <label>Batch</label>
-          <select name="batchid" value={formData.batchid} onChange={handleChange} required>
+          <label htmlFor="batchid">Batch</label>
+          <select
+            id="batchid"
+            name="batchid"
+            value={formData.batchid}
+            onChange={handleChange}
+            required
+          >
             <option value="">Select Batch</option>
             {batches.map(batch => (
               <option key={batch.batchid} value={batch.batchid}>
@@ -225,60 +232,119 @@ const DailyOperation = () => {
         </div>
 
         <div className="form-row">
-          <label>Feed Type</label>
-          <select name="feedType" value={formData.feedType} onChange={handleChange} required>
+          <label htmlFor="feedType">Feed Type</label>
+          <select
+            id="feedType"
+            name="feedType"
+            value={formData.feedType}
+            onChange={handleChange}
+            required
+          >
             <option value="">Select Feed Type</option>
             {feedTypes.map(type => (
               <option key={type} value={type}>{type}</option>
             ))}
           </select>
+
           {formData.feedType && (
             <small>Remaining Feed: {currentFeedQty.toFixed(2)} kg</small>
           )}
         </div>
 
         <div className="form-row">
-          <label>Feed Usage (kg)</label>
-          <input type="number" name="feedUsage" value={formData.feedUsage} onChange={handleChange} step="0.1" min="0" />
+          <label htmlFor="feedUsage">Feed Usage (kg)</label>
+          <input
+            id="feedUsage"
+            type="number"
+            name="feedUsage"
+            value={formData.feedUsage}
+            onChange={handleChange}
+            placeholder="Feed Usage"
+            step="0.1"
+            min="0"
+            required
+          />
         </div>
 
         <div className="form-row">
-          <label>Water Used (liters)</label>
+          <label htmlFor="waterUsed">Water Used (liters)</label>
           <input
+            id="waterUsed"
             type="number"
             name="waterUsed"
             value={formData.waterUsed}
             onChange={handleChange}
+            placeholder="Water Used"
             step="0.1"
             min="0"
           />
         </div>
 
         <div className="form-row">
-          <label>Egg Production</label>
-          <input type="number" name="eggProduction" value={formData.eggProduction} onChange={handleChange} min="0" />
+          <label htmlFor="eggProduction">Egg Production</label>
+          <input
+            id="eggProduction"
+            type="number"
+            name="eggProduction"
+            value={formData.eggProduction}
+            onChange={handleChange}
+            placeholder="Egg Prdoduction"
+            min="0"
+          />
         </div>
 
         <div className="form-row">
-          <label>Average Egg Weight (g)</label>
-          <input type="number" name="avgEggWeight" value={formData.avgEggWeight} onChange={handleChange} step="0.1" min="0" />
+          <label htmlFor="avgEggWeight">Average Egg Weight (g)</label>
+          <input
+            id="avgEggWeight"
+            type="number"
+            name="avgEggWeight"
+            value={formData.avgEggWeight}
+            onChange={handleChange}
+            placeholder="Average Egg Weight"
+            step="0.1"
+            min="0"
+          />
         </div>
 
         <div className="form-row">
-          <label>Male Mortality</label>
-          <input type="number" name="maleMortality" value={formData.maleMortality} onChange={handleChange} min="0" />
+          <label htmlFor="maleMortality">Male Mortality</label>
+          <input
+            id="maleMortality"
+            type="number"
+            name="maleMortality"
+            value={formData.maleMortality}
+            onChange={handleChange}
+            placeholder="Male Mortality"
+            min="0"
+          />
           <small>Remaining Males: {remainingMale}</small>
         </div>
 
         <div className="form-row">
-          <label>Female Mortality</label>
-          <input type="number" name="femaleMortality" value={formData.femaleMortality} onChange={handleChange} min="0" />
+          <label htmlFor="femaleMortality">Female Mortality</label>
+          <input
+            id="femaleMortality"
+            type="number"
+            name="femaleMortality"
+            value={formData.femaleMortality}
+            placeholder="Female Mortality"
+            onChange={handleChange}
+            min="0"
+          />
           <small>Remaining Females: {remainingFemale}</small>
         </div>
 
         <div className="form-row">
-          <label>Note</label>
-          <textarea name="note" value={formData.note} onChange={handleChange} rows="4" />
+          <label htmlFor="note">Note</label>
+          <textarea
+            id="note"
+            name="note"
+            value={formData.note}
+            onChange={handleChange}
+            placeholder="Note..."
+            rows="4"
+          />
         </div>
 
         <div className="form-actions">

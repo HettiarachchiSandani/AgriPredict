@@ -99,9 +99,9 @@ const BuyerRequestMatch = () => {
   return (
     <div className="buyer-request-wrapper">
       <div className="buyers-tabs">
-        <NavLink to="/owner/buyers" end className={({ isActive }) => "buyer-tab" + (isActive ? " active" : "")}>Buyers List</NavLink>
-        <NavLink to="/owner/buyers/request" className={({ isActive }) => "buyer-tab" + (isActive ? " active" : "")}>Buyer Requests</NavLink>
-        <NavLink to="/owner/buyers/order-history" className={({ isActive }) => "buyer-tab" + (isActive ? " active" : "")}>Order History</NavLink>
+        <NavLink to="/manager/buyers" end className={({ isActive }) => "buyer-tab" + (isActive ? " active" : "")}>Buyers List</NavLink>
+        <NavLink to="/manager/buyers/request" className={({ isActive }) => "buyer-tab" + (isActive ? " active" : "")}>Buyer Requests</NavLink>
+        <NavLink to="/manager/buyers/order-history" className={({ isActive }) => "buyer-tab" + (isActive ? " active" : "")}>Order History</NavLink>
       </div>
 
       <div className="buyer-request-header">

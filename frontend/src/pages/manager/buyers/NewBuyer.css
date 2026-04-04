@@ -74,3 +74,20 @@ textarea {
 .buyer-cancel-btn:hover {
   background: #d32f2f;
 }
+
+.password-toggle-icon:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.password-toggle-icon {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin-left: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

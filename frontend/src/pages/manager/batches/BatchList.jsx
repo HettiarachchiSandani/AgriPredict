@@ -65,8 +65,8 @@ const BatchManagement = () => {
   }, []);
 
   const handleActionClick = async (batchId, action) => {
-    if (action === "edit") navigate(`/owner/batches/edit/${batchId}`);
-    else if (action === "view") navigate(`/owner/batches/view/${batchId}`);
+    if (action === "edit") navigate(`/manager/batches/edit/${batchId}`);
+    else if (action === "view") navigate(`/manager/batches/view/${batchId}`);
     else if (action === "delete") {
       if (window.confirm("Are you sure you want to delete this batch?")) {
         try {
@@ -81,7 +81,7 @@ const BatchManagement = () => {
   };
 
   const handleAddBatch = () => {
-    navigate("/owner/batches/add");
+    navigate("/manager/batches/add");
   };
 
   const filteredBatches = batches.filter((batch) => {

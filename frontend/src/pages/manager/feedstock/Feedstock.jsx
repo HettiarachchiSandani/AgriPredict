@@ -189,6 +189,7 @@ const FeedStockList = () => {
                 <td className="actions-col">
                   <button
                     className="icon-btn edit-btn"
+                    aria-label="edit"
                     onClick={() => handleEdit(row)}
                   >
                     <MdEdit size={18} />
@@ -196,6 +197,7 @@ const FeedStockList = () => {
 
                   <button
                     className="icon-btn delete-btn"
+                    aria-label="delete"
                     onClick={() => handleDelete(row.stockid)}
                   >
                     <MdDelete size={18} />
@@ -234,8 +236,9 @@ const FeedStockList = () => {
 
             <form className="form-grid" onSubmit={handleAdd}>
               <div className="form-group">
-                <label>Feed Type</label>
+                <label htmlFor="feedtype">Feed Type</label>
                 <input
+                  id="feedtype"
                   type="text"
                   value={form.feedtype}
                   onChange={(e) => setForm({ ...form, feedtype: e.target.value })}
@@ -245,8 +248,9 @@ const FeedStockList = () => {
               </div>
 
               <div className="form-group">
-                <label>Quantity (kg)</label>
+                <label htmlFor="quantity">Quantity (kg)</label>
                 <input
+                  id="quantity"
                   type="number"
                   value={form.quantity}
                   onChange={(e) =>

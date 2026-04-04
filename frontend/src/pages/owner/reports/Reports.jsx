@@ -145,16 +145,16 @@ const Reports = () => {
   };
 
   const requiresDates = [
-      "Feed Report",
-      "Order Report",
-      "Daily Operations Report"
-    ];
+    "Feed Report",
+    "Order Report",
+    "Daily Operations Report"
+  ];
 
-    const isDateRequired = requiresDates.includes(formData.reportType);
+  const isDateRequired = requiresDates.includes(formData.reportType);
 
-    const isValid =
-      formData.reportType &&
-      (!isDateRequired || (formData.dateFrom && formData.dateTo));
+  const isValid =
+    formData.reportType &&
+    (!isDateRequired || (formData.dateFrom && formData.dateTo));
 
   return (
     <div className="reports-page">
@@ -185,8 +185,9 @@ const Reports = () => {
             </div>
 
             <div className="reports-form-group">
-              <label>Date From</label>
+              <label htmlFor="dateFrom">Date From</label>
               <input
+                id="dateFrom"
                 type="date"
                 name="dateFrom"
                 value={formData.dateFrom}
@@ -195,8 +196,9 @@ const Reports = () => {
             </div>
 
             <div className="reports-form-group">
-              <label>Date To</label>
+              <label htmlFor="dateTo">Date To</label>
               <input
+                id="dateTo"
                 type="date"
                 name="dateTo"
                 value={formData.dateTo}
@@ -212,7 +214,7 @@ const Reports = () => {
                   value={formData.batch}
                   onChange={handleChange}
                 >
-                  <option value="">All Batches</option>
+                  <option value="">All Batch</option>
                   {batchOptions.map((b) => (
                     <option key={b.batchid} value={b.batchid}>
                       {b.batchname}
