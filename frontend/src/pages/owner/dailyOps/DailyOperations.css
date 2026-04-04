@@ -1,0 +1,67 @@
+.daily-operation {
+  max-width: 800px;
+  width: 80%;
+  margin: 0 auto;
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.daily-operation h1 {
+  margin-bottom: 20px;
+  color: #2E7D32;
+}
+
+.form-row {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-top: 2px;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: none;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.form-actions button[type="submit"] {
+  background: #4caf50;
+  color: #fff;
+}
+
+.form-actions button[type="submit"]:hover {
+  background: #256828;
+}
+
+.form-actions button[type="button"] {
+  background: #f44336;
+  color: #fff;
+}
+
+.form-actions button[type="button"]:hover {
+  background: #d32f2f;
+}
