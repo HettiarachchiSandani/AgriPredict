@@ -254,6 +254,17 @@ const Predictions = () => {
     ],
   };
 
+  const getMortalityLevel = (value) => {
+    if (value == null) return { text: "--", color: "#9E9E9E" };
+
+    if (value < 0.2)
+      return { text: "Low risk of mortality", color: "#4CAF50" };
+    if (value < 0.5)
+      return { text: "Moderate risk of mortality", color: "#FF9800" };
+
+    return { text: "High risk of mortality", color: "#E53935" };
+  };
+
   return (
     <div className="predictions-page">
       {errorMessage && (
@@ -317,27 +328,43 @@ const Predictions = () => {
         </div>
 
         <div className="info-boxes">
-          <div className="info-box green">
-            <h4>Egg Production</h4>
-            <p>
-              <strong>{predEggs[predEggs.length - 1] ?? "--"}</strong> predicted
-              for <strong>{nextPredictionDate ?? "--"}</strong>
-            </p>
-          </div>
-
-          <div className="info-box red">
-            <h4>Mortality Risk</h4>
-            <p>
-              <strong>
-                {predMortality.length > 0 &&
-                predMortality[predMortality.length - 1] != null
-                  ? (predMortality[predMortality.length - 1] * 100).toFixed(2)
-                  : "--"}
-              </strong>{" "}
-              % predicted for <strong>{nextPredictionDate ?? "--"}</strong>
-            </p>
-          </div>
+        <div className="info-box green">
+          <h4>Egg Production</h4>
+          <p>
+            Predicted eggs for <strong>{nextPredictionDate ?? "--"}</strong>
+          </p>
+          <h2>
+            {predEggs[predEggs.length - 1] ?? "--"}
+          </h2>
         </div>
+
+        <div className="info-box red">
+        <h4>Mortality Prediction</h4>
+        <p>
+          Predicted for <strong>{nextPredictionDate ?? "--"}</strong>
+        </p>
+        {(() => {
+          const value =
+            predMortality.length > 0
+              ? predMortality[predMortality.length - 1]
+              : null;
+          const risk = getMortalityLevel(value);
+          return (
+            <>
+              <h2 style={{ color: risk.color }}>
+                {value != null ? `${(value * 100).toFixed(2)}%` : "--"}
+              </h2>
+              <p style={{ color: risk.color }}>
+                {risk.text}
+              </p>
+              <small>
+                (Chance that mortality may occur, not total batch loss)
+              </small>
+            </>
+          );
+        })()}
+      </div>
+      </div>
       </div>
 
       {Object.keys(shapValues).length > 0 && (

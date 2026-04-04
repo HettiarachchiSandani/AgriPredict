@@ -180,24 +180,27 @@ const EditBatch = () => {
         </div>
 
         <div className="form-row">
-          <label>Batch Name *</label>
+            <label htmlFor="batchName">Batch Name *</label>
           <input
+            id="batchName"
             type="text"
             name="batchName"
             value={formData.batchName}
             onChange={handleChange}
+            placeholder="Batch Name"
+            required
           />
-          {errors.batchName && (
-            <span className="error">{errors.batchName}</span>
-          )}
+          {errors.batchName && <span className="error">{errors.batchName}</span>}
         </div>
 
         <div className="form-row">
-          <label>Breed / Strain *</label>
+          <label htmlFor="breedId">Breed / Strain *</label>
           <select
+            id="breedId"
             name="breedId"
             value={formData.breedId}
             onChange={handleChange}
+            required
           >
             <option value="">Select Breed</option>
             {breeds.map((b) => (
@@ -206,77 +209,88 @@ const EditBatch = () => {
               </option>
             ))}
           </select>
-          {errors.breedId && (
-            <span className="error">{errors.breedId}</span>
-          )}
+          {errors.breedId && <span className="error">{errors.breedId}</span>}
         </div>
 
         {formData.eggType && (
           <div className="form-row">
-            <label>Egg Type</label>
-            <input value={formData.eggType} disabled />
+            <label htmlFor="eggType">Egg Type</label>
+            <input
+              id="eggType"
+              value={formData.eggType}
+              disabled
+            />
           </div>
         )}
 
         <div className="form-row">
-          <label>Start Date *</label>
+          <label htmlFor="startDate">Start Date *</label>
           <input
+            id="startDate"
             type="date"
             name="startDate"
             value={formData.startDate}
             onChange={handleChange}
+            required
           />
+          {errors.startDate && <span className="error">{errors.startDate}</span>}
         </div>
 
         <div className="form-row">
-          <label>Initial Male Birds *</label>
+          <label htmlFor="initialMale">Initial Male Birds *</label>
           <input
+            id="initialMale"
             type="number"
             name="initialMale"
             value={formData.initialMale}
+            placeholder="Initial Male Bird Count"
             onChange={handleChange}
           />
-          {errors.initialMale && (
-            <span className="error">{errors.initialMale}</span>
-          )}
+          {errors.initialMale && <span className="error">{errors.initialMale}</span>}
         </div>
 
         <div className="form-row">
-          <label>Initial Female Birds *</label>
+          <label htmlFor="initialFemale">Initial Female Birds *</label>
           <input
+            id="initialFemale"
             type="number"
             name="initialFemale"
             value={formData.initialFemale}
             onChange={handleChange}
+            placeholder="Initial Female Bird Count"
+            required
           />
-          {errors.initialFemale && (
-            <span className="error">{errors.initialFemale}</span>
-          )}
+          {errors.initialFemale && <span className="error">{errors.initialFemale}</span>}
         </div>
 
         <div className="form-row">
-          <label>Current Male Birds</label>
+          <label htmlFor="currentMale">Current Male Birds</label>
           <input
+            id="currentMale"
             type="number"
             name="currentMale"
             value={formData.currentMale}
+            placeholder="Current Male Bird Count"
             onChange={handleChange}
           />
         </div>
 
         <div className="form-row">
-          <label>Current Female Birds</label>
+          <label htmlFor="currentFemale">Current Female Birds</label>
           <input
+            id="currentFemale"
             type="number"
             name="currentFemale"
             value={formData.currentFemale}
+            placeholder="Current Female Bird Count"
             onChange={handleChange}
           />
         </div>
 
         <div className="form-row">
-          <label>Status</label>
+          <label htmlFor="status">Status</label>
           <select
+            id="status"
             name="status"
             value={formData.status}
             onChange={handleChange}
@@ -289,20 +303,19 @@ const EditBatch = () => {
         </div>
 
         <div className="form-row">
-          <label>Notes</label>
+          <label htmlFor="note">Notes</label>
           <textarea
+            id="note"
             name="note"
             value={formData.note}
             onChange={handleChange}
+            placeholder="Note..."
             rows="4"
           />
         </div>
 
         <div className="form-actions">
-          <button
-            type="button"
-            onClick={() => navigate("/owner/batches")}
-          >
+          <button type="button" onClick={() => navigate("/owner/batches")}>
             Cancel
           </button>
           <button type="submit">Save</button>

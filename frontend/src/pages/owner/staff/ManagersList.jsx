@@ -181,10 +181,10 @@ const ManagersList = () => {
                   </td>
                   <td>{m.user_details?.note}</td>
                   <td className="actions-col">
-                    <button className="icon-btn edit-btn" onClick={() => handleEditManager(m)}>
+                    <button className="icon-btn edit-btn" aria-label="edit manager" onClick={() => handleEditManager(m)}>
                       <MdEdit size={18} />
                     </button>
-                    <button className="icon-btn delete-btn" onClick={() => handleDelete(m.managerid)}>
+                    <button className="icon-btn delete-btn" aria-label="delete manager" onClick={() => handleDelete(m.managerid)}>
                       <MdDelete size={18} />
                     </button>
                   </td>

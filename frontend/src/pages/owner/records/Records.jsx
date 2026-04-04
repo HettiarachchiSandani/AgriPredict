@@ -74,7 +74,7 @@ const RecordPage = () => {
       <div className="records-filters">
         <div className="filter-item">
           <label htmlFor="batchId">Batch</label>
-          <select name="batchId" value={filters.batchId} onChange={handleFilterChange}>
+          <select id="batchId" name="batchId" value={filters.batchId} onChange={handleFilterChange}>
             <option value="">All Batches</option>
             {batches.map((batch) => (
               <option key={batch.batchid} value={batch.batchid}>

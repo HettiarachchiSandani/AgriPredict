@@ -185,8 +185,9 @@ const Reports = () => {
             </div>
 
             <div className="reports-form-group">
-              <label>Date From</label>
+              <label htmlFor="dateFrom">Date From</label>
               <input
+                id="dateFrom"
                 type="date"
                 name="dateFrom"
                 value={formData.dateFrom}
@@ -195,8 +196,9 @@ const Reports = () => {
             </div>
 
             <div className="reports-form-group">
-              <label>Date To</label>
+              <label htmlFor="dateTo">Date To</label>
               <input
+                id="dateTo"
                 type="date"
                 name="dateTo"
                 value={formData.dateTo}
