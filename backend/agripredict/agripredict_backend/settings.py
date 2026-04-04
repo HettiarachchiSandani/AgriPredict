@@ -98,6 +98,9 @@ DATABASES = {
         'OPTIONS': {
             'sslmode': 'require',
         },
+        'TEST': {
+            'NAME': os.getenv('DB_TEST_NAME', 'agripredict_test'),  
+        },
     },
 }
 
