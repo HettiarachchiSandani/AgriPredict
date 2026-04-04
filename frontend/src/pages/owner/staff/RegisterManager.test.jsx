@@ -26,62 +26,63 @@ describe("NewManager Component", () => {
     vi.clearAllMocks();
   });
 
-  const renderComponent = () => {
+  const fillRequiredFields = () => {
+    fireEvent.change(screen.getByPlaceholderText("Enter first name"), {
+      target: { value: "John" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter last name"), {
+      target: { value: "Doe" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("07X XXX XXXX"), {
+      target: { value: "0712345678" },
+    });
+    fireEvent.change(screen.getByLabelText("Date of Birth"), {
+      target: { value: "2000-01-01" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("NIC number"), {
+      target: { value: "123456789V" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("example@email.com"), {
+      target: { value: "test@mail.com" },
+    });
+    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
+      target: { value: "123456" },
+    });
+  };
+
+  const renderComponent = (setManagers = vi.fn()) => {
     render(
       <MemoryRouter>
-        <NewManager managers={[]} setManagers={vi.fn()} />
+        <NewManager managers={[]} setManagers={setManagers} />
       </MemoryRouter>
     );
   };
 
   it("renders form correctly", () => {
     renderComponent();
-
     expect(screen.getByText("Register Manager")).toBeInTheDocument();
     expect(screen.getByText("Save")).toBeInTheDocument();
   });
 
   it("shows validation errors when required fields are empty", async () => {
     renderComponent();
-
     fireEvent.click(screen.getByText("Save"));
-
-    expect(
-      await screen.findByText("Email is required")
-    ).toBeInTheDocument();
-
-    expect(
-      await screen.findByText("Password is required")
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Email is required")).toBeInTheDocument();
+      expect(screen.getByText("Password is required")).toBeInTheDocument();
+    });
   });
 
   it("submits form successfully", async () => {
     managersAPI.addManager.mockResolvedValue({});
     managersAPI.getManagers.mockResolvedValue([]);
-
     const mockSetManagers = vi.fn();
-
-    render(
-      <MemoryRouter>
-        <NewManager managers={[]} setManagers={mockSetManagers} />
-      </MemoryRouter>
-    );
-
-    fireEvent.change(screen.getByPlaceholderText("example@email.com"), {
-      target: { value: "test@mail.com" },
-    });
-
-    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
-      target: { value: "123456" },
-    });
-
+    renderComponent(mockSetManagers);
+    fillRequiredFields();
     fireEvent.click(screen.getByText("Save"));
-
     await waitFor(() => {
       expect(managersAPI.addManager).toHaveBeenCalled();
-      expect(global.alert).toHaveBeenCalledWith(
-        "Manager added successfully!"
-      );
+      expect(global.alert).toHaveBeenCalledWith("Manager added successfully!");
     });
   });
 
@@ -91,29 +92,17 @@ describe("NewManager Component", () => {
         data: { email: ["Email already exists"] },
       },
     });
-
     renderComponent();
-
-    fireEvent.change(screen.getByPlaceholderText("example@email.com"), {
-      target: { value: "test@mail.com" },
-    });
-
-    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
-      target: { value: "123456" },
-    });
-
+    fillRequiredFields();
     fireEvent.click(screen.getByText("Save"));
-
-    expect(
-      await screen.findByText("Email already exists")
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText("Email already exists")).toBeInTheDocument();
+    });
   });
 
   it("navigates when cancel button clicked", () => {
     renderComponent();
-
     fireEvent.click(screen.getByText("Cancel"));
-
     expect(mockNavigate).toHaveBeenCalledWith("/owner/staff");
   });
 
@@ -124,25 +113,16 @@ describe("NewManager Component", () => {
         resolveFn = resolve;
       })
     );
+    managersAPI.getManagers.mockResolvedValue([]); 
 
     renderComponent();
-
-    fireEvent.change(screen.getByPlaceholderText("example@email.com"), {
-      target: { value: "test@mail.com" },
-    });
-
-    fireEvent.change(screen.getByPlaceholderText("Enter password"), {
-      target: { value: "123456" },
-    });
+    fillRequiredFields();
 
     fireEvent.click(screen.getByText("Save"));
-
     expect(screen.getByText("Saving...")).toBeInTheDocument();
 
     resolveFn({});
 
-    await waitFor(() => {
-      expect(screen.getByText("Save")).toBeInTheDocument();
-    });
+    expect(await screen.findByText("Save")).toBeInTheDocument();
   });
 });

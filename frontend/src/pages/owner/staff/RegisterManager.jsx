@@ -126,7 +126,7 @@ const NewManager = ({ managers, setManagers }) => {
     <div className="manager-container">
       <h1 className="manager-title">Register Manager</h1>
 
-      <form className="manager-form" onSubmit={handleSubmit}>
+      <form className="manager-form" onSubmit={handleSubmit} noValidate>
           <label htmlFor="firstname">First Name</label>
           <input
             id="firstname"
