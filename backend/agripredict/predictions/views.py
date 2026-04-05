@@ -39,6 +39,28 @@ class PredictionViewSet(viewsets.ModelViewSet):
         target_date = datetime.today().date() - timedelta(days=days_back)
         op = DailyOperations.objects.filter(batch=batch_obj, date=target_date).first()
         return getattr(op, field, 0) if op else 0
+    
+    def production_factor(self, age_weeks):
+        if age_weeks < 16:
+            return 0.0
+
+        elif age_weeks < 20:
+            return 0.05 + ((age_weeks - 16) / 4) * (0.25 - 0.05)
+
+        elif age_weeks < 28:
+            return 0.25 + ((age_weeks - 20) / 8) * (0.85 - 0.25)
+
+        elif age_weeks < 32:
+            return 0.85 + ((age_weeks - 28) / 4) * (0.90 - 0.85)
+
+        elif age_weeks < 60:
+            return 0.90 - ((age_weeks - 32) / 28) * (0.90 - 0.80)
+
+        elif age_weeks < 80:
+            return 0.80 - ((age_weeks - 60) / 20) * (0.80 - 0.55)
+
+        else:
+            return max(0.25, 0.55 - ((age_weeks - 80) * 0.015))
 
     @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def predict_next_day(self, request):
@@ -126,16 +148,13 @@ class PredictionViewSet(viewsets.ModelViewSet):
             X_egg = np.array([[features[f] for f in egg_features]], dtype=float)
             X_mort = np.array([[features[f] for f in mort_features]], dtype=float)
 
-            if roll_3_eggs == 0 and prev_day_eggs == 0:
-                pred_eggs = 0
-                pred_mortality = 0.0
-                estimated_mortality = 0
-                mortality_risk = "Low"
-            else:
-                pred_eggs = max(0, int(round(egg_model.predict(X_egg)[0])))
-                pred_mortality = mortality_model.predict_proba(X_mort)[0][1]
-                estimated_mortality = pred_mortality * total_birds
-                mortality_risk = "High" if pred_mortality > 0.5 else "Low"
+            raw_pred = float(egg_model.predict(X_egg)[0])
+            factor = self.production_factor(age_weeks)
+            adjusted_pred = raw_pred * factor
+            pred_eggs = max(0, int(round(adjusted_pred)))
+            pred_mortality = mortality_model.predict_proba(X_mort)[0][1]
+            estimated_mortality = pred_mortality * total_birds
+            mortality_risk = "High" if pred_mortality > 0.5 else "Low"
 
             prediction = Prediction.objects.create(
                 batchid=batch_obj,
@@ -186,27 +205,34 @@ class PredictionViewSet(viewsets.ModelViewSet):
 
             for batch_obj in batches:
                 try:
-                    total_birds = float(batch_obj.currentcount or batch_obj.initialcount or 1)
-
                     if not batch_obj.startdate:
                         continue
 
-                    age_days = (today - batch_obj.startdate).days
-                    age_weeks = age_days // 7
+                    history_count = DailyOperations.objects.filter(batch=batch_obj).count()
+                    if history_count < 7:
+                        continue
 
                     prev_ops = DailyOperations.objects.filter(
                         batch=batch_obj,
                         date=today - timedelta(days=1)
                     ).first()
 
-                    if not prev_ops:
+                    if not prev_ops or prev_ops.eggcount is None or not prev_ops.feedusage:
                         continue
 
-                    valid_batches_found = True
+                    if not batch_obj.currentcount and not batch_obj.initialcount:
+                        continue
 
-                    daily_feed = float(prev_ops.feedusage or 0.1)
-                    feed_per_bird = daily_feed / total_birds if total_birds else 0.01
+                    total_birds = float(batch_obj.currentcount or batch_obj.initialcount)
+
+                    age_days = (today - batch_obj.startdate).days
+                    age_weeks = age_days // 7
+
+                    daily_feed = float(prev_ops.feedusage)
+                    feed_per_bird = daily_feed / total_birds
+
                     prev_day_eggs = int(prev_ops.eggcount or 0)
+
                     lag_1_eggs = prev_day_eggs
                     lag_3_eggs = self.get_lag_value(batch_obj, "eggcount", 3)
                     lag_7_eggs = self.get_lag_value(batch_obj, "eggcount", 7)
@@ -214,27 +240,24 @@ class PredictionViewSet(viewsets.ModelViewSet):
                     roll_7_eggs = self.get_rolling_avg(batch_obj, "eggcount", today, 7)
                     trend_eggs = lag_1_eggs - roll_3_eggs
 
-                    X_egg = np.array([[
-                        float(age_weeks),
-                        float(total_birds),
-                        float(daily_feed),
-                        float(feed_per_bird),
-                        float(lag_1_eggs),
-                        float(lag_3_eggs),
-                        float(lag_7_eggs),
-                        float(roll_3_eggs),
-                        float(roll_7_eggs),
-                        float(trend_eggs)
+                    X_egg = np.array([[ 
+                        age_weeks, total_birds, daily_feed, feed_per_bird,
+                        lag_1_eggs, lag_3_eggs, lag_7_eggs,
+                        roll_3_eggs, roll_7_eggs, trend_eggs
                     ]], dtype=float)
 
                     pred = egg_model.predict(X_egg)
-                    pred_eggs = max(0, int(round(float(pred[0]))))
+                    raw_pred = float(pred[0])
+                    factor = self.production_factor(age_weeks)
+                    adjusted_pred = raw_pred * factor
+                    pred_eggs = max(0, int(round(adjusted_pred)))
+
                     total_predicted_eggs += pred_eggs
+                    valid_batches_found = True
 
                 except Exception as batch_error:
                     print(f"Batch error ({batch_obj.batchid}):", batch_error)
                     continue
-
             if not valid_batches_found:
                 return Response({
                     "error": "Prediction unavailable: missing yesterday’s data."

@@ -224,6 +224,7 @@ class OrderViewSet(viewsets.ModelViewSet):
                 available_eggs = max(0, total_eggs - completed_qty)
 
                 batches = [b for b in batches_by_breed if b.breed == breed]
+                prediction_available = False 
 
                 for batch in batches:
                     today = datetime.today().date()
@@ -232,13 +233,14 @@ class OrderViewSet(viewsets.ModelViewSet):
                     latest_date = latest_date_dict.get(batch.batchid)
                     if not latest_date:
                         continue
-                    if latest_date != yesterday:
+                    if (today - latest_date).days > 1:
                         continue
 
                     prev_ops = batch.dailyoperations_set.filter(date=latest_date).first()
                     if not prev_ops:
                         continue
 
+                    prediction_available = True
                     valid_batches_found = True
                     total_birds = batch.currentcount or batch.initialcount or 1
                     daily_feed = float(prev_ops.feedusage or 0.1)
@@ -266,7 +268,9 @@ class OrderViewSet(viewsets.ModelViewSet):
                         float(trend_eggs)
                     ]], dtype=float)
 
-                    pred_eggs = max(0, int(round(egg_model.predict(X_egg)[0])))
+                    raw_pred = float(egg_model.predict(X_egg)[0])
+                    factor = pred_view.production_factor(age_weeks)  
+                    pred_eggs = max(0, int(round(raw_pred * factor)))
                     next_7_days_predicted_eggs += pred_eggs * 7
 
             results.append({
@@ -276,8 +280,8 @@ class OrderViewSet(viewsets.ModelViewSet):
                 "breedname": breed.breedname if breed else None,
                 "eggtype": breed.eggtype if breed else None,
                 "available_eggs": available_eggs,
-                "next_7_days_predicted_eggs": next_7_days_predicted_eggs if next_7_days_predicted_eggs > 0 else None,
-                "prediction_available": next_7_days_predicted_eggs > 0,
+                "next_7_days_predicted_eggs": next_7_days_predicted_eggs if prediction_available else None,
+                "prediction_available": prediction_available,
                 "quantity": order.quantity,
                 "ordereddate": order.ordereddate,
                 "requesteddate": order.requesteddate,

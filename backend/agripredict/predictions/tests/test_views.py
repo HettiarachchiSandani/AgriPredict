@@ -38,9 +38,9 @@ class PredictionViewSetTest(APITestCase):
             batchid="BAT001",
             batchname="Test Batch",
             breed=self.breed,
-            startdate=date.today() - timedelta(days=10),  
-            initialcount=100,
-            currentcount=100
+            startdate=date.today() - timedelta(days=120),  
+            initial_male=50,
+            initial_female=50
         )
 
         today = date.today()
