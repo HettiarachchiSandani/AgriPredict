@@ -32,7 +32,7 @@ class FeedStock(models.Model):
         if self.quantity <= 0:
             self.status = "Out of Stock"
             self.quantity = 0
-        elif self.quantity < 100:
+        elif self.quantity < 500:
             self.status = "Low Stock"
         else:
             self.status = "Available"
