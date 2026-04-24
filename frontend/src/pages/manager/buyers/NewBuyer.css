@@ -91,3 +91,72 @@ textarea {
   align-items: center;
   justify-content: center;
 }
+
+@media (max-width: 768px) {
+  .buyer-container {
+    width: 90%;
+    padding: 18px 20px;
+  }
+
+  .buyer-title {
+    font-size: 22px;
+    text-align: center;
+  }
+
+  .buyer-form input,
+  .buyer-form select,
+  .buyer-form textarea {
+    font-size: 14px;
+    padding: 9px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buyer-save-btn,
+  .buyer-cancel-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .buyer-container {
+    width: 95%;
+    padding: 15px;
+    border-radius: 10px;
+  }
+
+  .buyer-title {
+    font-size: 20px;
+  }
+
+  .buyer-form label {
+    font-size: 13px;
+  }
+
+  .buyer-form input,
+  .buyer-form select,
+  .buyer-form textarea {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .buyer-save-btn,
+  .buyer-cancel-btn {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .password-toggle-icon {
+    margin-left: 6px;
+  }
+}

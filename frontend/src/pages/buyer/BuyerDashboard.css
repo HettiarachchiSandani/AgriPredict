@@ -108,11 +108,80 @@
 }
 
 @media (max-width: 768px) {
+  .buyer-dashboard {
+    gap: 18px;
+    padding-right: 10px;
+  }
+
   .buyer-stats-cards {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+
+  .buyer-stat-card {
+    padding: 16px;
+  }
+
+  .buyer-stat-card p {
+    font-size: 22px;
   }
 
   .buyer-orders-table-container {
     padding: 15px;
+    overflow-x: auto;
+  }
+
+  .buyer-orders-table {
+    min-width: 650px;
+  }
+
+  .buyer-orders-table th,
+  .buyer-orders-table td {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .buyer-dashboard {
+    padding-right: 8px;
+    gap: 16px;
+  }
+
+  .buyer-stats-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .buyer-stat-card {
+    padding: 14px;
+  }
+
+  .buyer-stat-card h3 {
+    font-size: 13px;
+  }
+
+  .buyer-stat-card p {
+    font-size: 20px;
+  }
+
+  .buyer-orders-table-container {
+    padding: 12px;
+  }
+
+  .buyer-orders-table {
+    min-width: 600px;
+  }
+
+  .buyer-orders-table th,
+  .buyer-orders-table td {
+    padding: 8px 5px;
+    font-size: 12px;
+  }
+
+  .buyer-status-badge {
+    font-size: 12px;
+    padding: 3px 8px;
   }
 }

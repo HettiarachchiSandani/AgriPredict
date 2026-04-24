@@ -128,8 +128,105 @@
   font-style: italic;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
+  .batch-details-wrapper {
+    width: 90%;
+    gap: 18px;
+  }
+
+  .batch-details-title {
+    font-size: 24px;
+    margin-bottom: 14px;
+  }
+
   .batch-card {
     flex-direction: column;
+    gap: 18px;
+    padding: 16px;
+  }
+
+  .batch-info {
+    font-size: 0.9rem;
+    gap: 10px;
+  }
+
+  .counts-row {
+    gap: 8px;
+  }
+
+  .badge {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+  }
+
+  .batch-metrics h2 {
+    font-size: 1.1rem;
+  }
+
+  .batch-metrics th,
+  .batch-metrics td {
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .batch-details-wrapper {
+    width: 95%;
+    gap: 14px;
+  }
+
+  .batch-details-title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .batch-card {
+    padding: 14px;
+    border-radius: 10px;
+  }
+
+  .batch-info {
+    font-size: 0.85rem;
+    gap: 8px;
+  }
+
+  .counts-section {
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .counts-row {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 3px 8px;
+    width: fit-content;
+  }
+
+  .batch-metrics {
+    overflow-x: auto;
+  }
+
+  .batch-metrics table {
+    min-width: 500px;
+  }
+
+  .batch-metrics h2 {
+    font-size: 1rem;
+  }
+
+  .batch-metrics th,
+  .batch-metrics td {
+    padding: 8px;
+    font-size: 0.8rem;
+  }
+
+  .status-badge {
+    font-size: 11px;
+    padding: 3px 6px;
   }
 }
