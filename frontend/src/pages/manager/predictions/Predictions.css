@@ -217,25 +217,169 @@
   height: 300px !important;
 }
 
-@media (max-width: 900px) {
-  .shap-cards {
-    grid-template-columns: 1fr;
+@media (max-width: 768px) {
+  .predictions-page {
+    gap: 18px;
+    width: 95%;
   }
-}
 
-/* Responsive adjustments */
-@media (max-width: 1000px) {
+  .predictions-top-header h1 {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+
+  .predictions-filters {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .predictions-filters .filter-item {
+    width: 100%;
+  }
+
+  .filter-item select,
+  .filter-item input {
+    min-width: 100%;
+    font-size: 14px;
+  }
+
+  .generate-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+
   .predictions-main-content {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  .predictions-filters {
-    grid-template-columns: 1fr 1fr;
+  .chart-box {
+    padding: 16px;
+  }
+
+  .chart-box h3 {
+    font-size: 16px;
+  }
+
+  .info-boxes {
+    gap: 14px;
+  }
+
+  .info-box {
+    padding: 16px;
+  }
+
+  .info-box h4 {
+    font-size: 16px;
+  }
+
+  .shap-container {
+    padding: 20px;
+  }
+
+  .shap-header h2 {
+    font-size: 20px;
+  }
+
+  .shap-cards {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .shap-card canvas {
+    height: 250px !important;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 480px) {
+  .predictions-page {
+    width: 95%;
+    gap: 14px;
+  }
+
+  .predictions-top-header h1 {
+    font-size: 20px;
+    text-align: center;
+  }
+
   .predictions-filters {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .filter-item label {
+    font-size: 13px;
+  }
+
+  .filter-item select,
+  .filter-item input {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .generate-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .chart-box {
+    padding: 14px;
+  }
+
+  .chart-box h3 {
+    font-size: 15px;
+  }
+
+  .scenario-simulation {
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 13px;
+  }
+
+  .scenario-simulation button {
+    width: 100%;
+  }
+
+  .info-box {
+    padding: 14px;
+  }
+
+  .info-box h4 {
+    font-size: 15px;
+  }
+
+  .info-box p {
+    font-size: 13px;
+  }
+
+  .shap-container {
+    padding: 16px;
+  }
+
+  .shap-header h2 {
+    font-size: 18px;
+  }
+
+  .shap-header p {
+    font-size: 13px;
+  }
+
+  .shap-card {
+    padding: 16px;
+  }
+
+  .shap-card h3 {
+    font-size: 15px;
+  }
+
+  .shap-card canvas {
+    height: 220px !important;
+  }
+
+  .error-box {
+    width: 90%;
+    padding: 18px;
   }
 }

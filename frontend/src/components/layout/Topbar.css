@@ -194,28 +194,93 @@
   text-transform: capitalize;
 }
 
-@media (max-width: 1024px) {
-  .topbar {
-    height: 70px;
-    padding: 0 25px;
-  }
-
-  .hamburger-btn {
-    display: block;
-  }
-}
-
 @media (max-width: 768px) {
   .topbar {
     height: 60px;
-    padding: 0 20px;
+    padding: 0 15px;
   }
 
   .dashboard-title {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .topbar-right {
-    gap: 20px;
+    gap: 15px;
+  }
+
+  .user-info {
+    padding: 6px 12px;
+    gap: 10px;
+  }
+
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .user-name {
+    font-size: 14px;
+  }
+
+  .user-role {
+    font-size: 12px;
+  }
+
+  .notification-dropdown {
+    width: 280px;
+    right: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topbar {
+    height: 55px;
+    padding: 0 12px;
+  }
+
+  .dashboard-title {
+    font-size: 18px;
+  }
+
+  .topbar-content {
+    justify-content: space-between;
+  }
+
+  .user-details {
+    display: none;
+  }
+
+  .user-info {
+    padding: 6px 10px;
+    border-radius: 20px;
+  }
+
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
+  .topbar-right {
+    gap: 12px;
+  }
+
+  .notification-dropdown {
+    width: 250px;
+    right: 5px;
+    max-height: 300px;
+  }
+
+  .notification-item p {
+    font-size: 13px;
+  }
+
+  .notification-item small {
+    font-size: 10px;
+  }
+
+  .hamburger-btn {
+    transform: scale(0.95);
   }
 }
