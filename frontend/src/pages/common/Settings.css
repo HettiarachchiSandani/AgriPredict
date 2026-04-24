@@ -223,3 +223,83 @@
   color: #2E7D32; 
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+
+  .settings-header h1 {
+    font-size: 24px;
+  }
+
+  .settings-tabs {
+    gap: 12px;
+    flex-direction: column;
+  }
+
+  .settings-tab {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .settings-content {
+    padding: 16px;
+  }
+
+  .settings-form h2 {
+    font-size: 18px;
+  }
+
+  .checkbox-group {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .save-btn {
+    width: 100%;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+
+  .settings-wrapper {
+    padding: 12px 10px;
+    gap: 14px;
+  }
+
+  .settings-header h1 {
+    font-size: 24px;
+  }
+
+  .settings-tabs {
+    gap: 12px;
+    justify-content: flex-start;
+  }
+
+  .settings-tab {
+    font-size: 15px;
+    padding: 8px 10px;
+  }
+
+  .settings-content {
+    padding: 14px;
+  }
+
+  .settings-form h2 {
+    font-size: 17px;
+  }
+
+  .settings-form input {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .checkbox-group {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .save-btn,
+  .delete-btn1 {
+    width: 100%;
+  }
+}
