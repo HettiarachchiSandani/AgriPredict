@@ -165,7 +165,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         egg_features = [
             'age_weeks',
             'total_birds',
-            'daily_feedusage',
+            'daily_feed_kg',
             'feed_per_bird',
             'lag_1_eggs',
             'lag_3_eggs',

@@ -12,6 +12,7 @@ from decimal import Decimal
 from .models import Prediction
 from .serializers import PredictionSerializer
 from batches.models import DailyOperations, Batch
+from reports.blockchain import verify_blockchain 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_DIR = os.path.join(BASE_DIR, "models")
@@ -65,6 +66,12 @@ class PredictionViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['post'], permission_classes=[AllowAny])
     def predict_next_day(self, request):
         try:
+            is_valid, error_block = verify_blockchain()
+            if not is_valid:
+                return Response({
+                    "error": f"Blockchain tampering detected at record {error_block}"
+                }, status=400)
+            
             batch_id = request.data.get("batchid")
             if not batch_id:
                 return Response({"error": "batchid is required"}, status=400)
@@ -117,7 +124,7 @@ class PredictionViewSet(viewsets.ModelViewSet):
             features = {
                 "age_weeks": float(age_weeks),
                 "total_birds": float(total_birds),
-                "daily_feedusage": float(daily_feed),
+                "daily_feed_kg": float(daily_feed),
                 "feed_per_bird": float(feed_per_bird),
                 "lag_1_eggs": float(lag_1_eggs),
                 "lag_3_eggs": float(lag_3_eggs),
@@ -135,7 +142,7 @@ class PredictionViewSet(viewsets.ModelViewSet):
             }
 
             egg_features = [
-                'age_weeks','total_birds','daily_feedusage','feed_per_bird',
+                'age_weeks','total_birds','daily_feed_kg','feed_per_bird',
                 'lag_1_eggs','lag_3_eggs','lag_7_eggs','roll_3_eggs',
                 'roll_7_eggs','trend_eggs'
             ]
