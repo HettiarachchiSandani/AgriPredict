@@ -41,8 +41,20 @@ def add_block(operation: DailyOperations):
 
 def verify_blockchain():
     blocks = list(Records.objects.order_by('timestamp'))
+
     for i in range(1, len(blocks)):
-        recalculated_hash = generate_operation_hash(blocks[i-1], blocks[i-1].previoushash)
-        if blocks[i].previoushash != blocks[i-1].hashvalue:
-            return False, blocks[i].recordsid
+        current_block = blocks[i]
+        previous_block = blocks[i - 1]
+
+        recalculated_hash = generate_operation_hash(
+            current_block.operationid,
+            current_block.previoushash
+        )
+
+        if current_block.hashvalue != recalculated_hash:
+            return False, current_block.recordsid
+
+        if current_block.previoushash != previous_block.hashvalue:
+            return False, current_block.recordsid
+
     return True, None
