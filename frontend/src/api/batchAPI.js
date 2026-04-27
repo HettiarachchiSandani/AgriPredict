@@ -54,7 +54,7 @@ export const getBatchDetails = async (batchId) => {
       total_eggs: data.total_eggs || 0,
       total_feed: data.total_feed || 0,
       avg_eggs_per_bird: data.avg_eggs_per_bird || 0,
-      feed_per_egg: data.feed_per_egg || 0,
+      feed_per_bird: data.feed_per_bird || 0,
       mortality_rate: data.mortality_rate || 0,
     };
   } catch (error) {
