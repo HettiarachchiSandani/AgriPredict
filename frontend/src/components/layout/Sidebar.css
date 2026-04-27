@@ -80,3 +80,69 @@
 .menu-item.active .icon {
   color: white;
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 220px;
+    padding: 0 12px;
+  }
+
+  .logo img {
+    width: 140px;
+  }
+
+  .menu-item {
+    font-size: 15px;
+    padding: 9px 12px;
+  }
+
+  .menu-item .icon {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 200px;
+    padding: 0 10px;
+    position: fixed;
+    height: 100vh;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+  }
+
+  .logo {
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  .logo img {
+    width: 120px;
+  }
+
+  .menu {
+    gap: 4px;
+  }
+
+  .bottom-menu {
+    gap: 4px;
+  }
+
+  .menu-item {
+    font-size: 14px;
+    padding: 10px;
+    justify-content: flex-start;
+  }
+
+  .menu-item .icon {
+    font-size: 18px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar.closed {
+    transform: translateX(-100%);
+  }
+}

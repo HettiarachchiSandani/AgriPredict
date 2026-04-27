@@ -57,3 +57,61 @@
 .btn-cancel:hover {
   background: #cfcfcf;
 }
+
+@media (max-width: 768px) {
+  .logout-card {
+    width: 300px;
+    padding: 28px;
+  }
+
+  .logout-card h2 {
+    font-size: 20px;
+  }
+
+  .logout-card p {
+    font-size: 13px;
+  }
+
+  .logout-actions {
+    gap: 12px;
+  }
+
+  .btn-logout,
+  .btn-cancel {
+    padding: 9px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .logout-wrapper {
+    padding: 15px;
+  }
+
+  .logout-card {
+    width: 100%;
+    max-width: 280px;
+    padding: 22px;
+    border-radius: 8px;
+  }
+
+  .logout-card h2 {
+    font-size: 18px;
+  }
+
+  .logout-card p {
+    font-size: 13px;
+  }
+
+  .logout-actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-logout,
+  .btn-cancel {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+}
