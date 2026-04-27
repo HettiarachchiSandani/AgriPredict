@@ -76,7 +76,6 @@ class PredictionViewSet(viewsets.ModelViewSet):
             if not batch_id:
                 return Response({"error": "batchid is required"}, status=400)
 
-            # Get batch
             try:
                 batch_obj = Batch.objects.get(batchid=batch_id)
             except Batch.DoesNotExist:
@@ -84,14 +83,15 @@ class PredictionViewSet(viewsets.ModelViewSet):
 
             today = datetime.today().date()
             prev_ops = DailyOperations.objects.filter(
-                batch=batch_obj,
-                date=today - timedelta(days=1)
-            ).first()
+                batch=batch_obj
+            ).order_by('-date').first()
 
             if not prev_ops:
                 return Response({
                     "error": "No daily data found for this batch. Add at least yesterday's record."
                 }, status=400)
+            
+            today = prev_ops.date + timedelta(days=1)
 
             total_birds = float(batch_obj.currentcount or batch_obj.initialcount or 1)
             age_days = (today - batch_obj.startdate).days
@@ -156,8 +156,11 @@ class PredictionViewSet(viewsets.ModelViewSet):
             X_mort = np.array([[features[f] for f in mort_features]], dtype=float)
 
             raw_pred = float(egg_model.predict(X_egg)[0])
-            factor = self.production_factor(age_weeks)
-            adjusted_pred = raw_pred * factor
+            if lag_1_eggs > 0:
+                adjusted_pred = raw_pred
+            else:
+                factor = self.production_factor(age_weeks)
+                adjusted_pred = raw_pred * factor
             pred_eggs = max(0, int(round(adjusted_pred)))
             pred_mortality = mortality_model.predict_proba(X_mort)[0][1]
             estimated_mortality = pred_mortality * total_birds
@@ -255,8 +258,11 @@ class PredictionViewSet(viewsets.ModelViewSet):
 
                     pred = egg_model.predict(X_egg)
                     raw_pred = float(pred[0])
-                    factor = self.production_factor(age_weeks)
-                    adjusted_pred = raw_pred * factor
+                    if lag_1_eggs > 0:
+                        adjusted_pred = raw_pred
+                    else:
+                        factor = self.production_factor(age_weeks)
+                        adjusted_pred = raw_pred * factor
                     pred_eggs = max(0, int(round(adjusted_pred)))
 
                     total_predicted_eggs += pred_eggs
