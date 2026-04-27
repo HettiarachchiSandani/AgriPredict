@@ -269,8 +269,12 @@ class OrderViewSet(viewsets.ModelViewSet):
                     ]], dtype=float)
 
                     raw_pred = float(egg_model.predict(X_egg)[0])
-                    factor = pred_view.production_factor(age_weeks)  
-                    pred_eggs = max(0, int(round(raw_pred * factor)))
+                    if lag_1_eggs > 0:
+                        adjusted_pred = raw_pred
+                    else:
+                        factor = pred_view.production_factor(age_weeks)
+                        adjusted_pred = raw_pred * factor
+                    pred_eggs = max(0, int(round(adjusted_pred)))
                     next_7_days_predicted_eggs += pred_eggs * 7
 
             results.append({

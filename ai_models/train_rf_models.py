@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-import xgboost as xgb
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
@@ -29,7 +29,6 @@ df = pd.read_csv("ai_ready_daily_features.csv")
 df.sort_values(['batch_encoded', 'age_weeks'], inplace=True)
 
 # FEATURE ENGINEERING
-
 for lag in [1, 3, 7]:
     df[f'lag_{lag}_eggs'] = df.groupby('batch_encoded')['prev_day_eggs'].shift(lag)
     df[f'lag_{lag}_feed'] = df.groupby('batch_encoded')['daily_feed_kg'].shift(lag)
@@ -47,7 +46,6 @@ df['trend_eggs'] = df['lag_1_eggs'] - df['roll_3_eggs']
 df['trend_mort'] = df['lag_1_mort']
 
 # TARGETS
-
 df['target_eggs'] = df.groupby('batch_encoded')['eggs'].shift(-1)
 
 df['target_mortality'] = (
@@ -57,29 +55,16 @@ df['target_mortality'] = (
 df.dropna(inplace=True)
 
 # FEATURES
-
 egg_features = [
-    'age_weeks',
-    'total_birds',
-    'daily_feed_kg',
-    'feed_per_bird',
-    'lag_1_eggs',
-    'lag_3_eggs',
-    'lag_7_eggs',
-    'roll_3_eggs',
-    'roll_7_eggs',
-    'trend_eggs'
+    'age_weeks','total_birds','daily_feed_kg','feed_per_bird',
+    'lag_1_eggs','lag_3_eggs','lag_7_eggs',
+    'roll_3_eggs','roll_7_eggs','trend_eggs'
 ]
 
 mort_features = [
-    'age_weeks',
-    'total_birds',
-    'feed_per_bird',
-    'prev_day_mortality',
-    'mortality_3day_avg',
-    'lag_1_mort',
-    'lag_3_mort',
-    'trend_mort'
+    'age_weeks','total_birds','feed_per_bird',
+    'prev_day_mortality','mortality_3day_avg',
+    'lag_1_mort','lag_3_mort','trend_mort'
 ]
 
 # SPLIT BY BATCH
@@ -93,23 +78,20 @@ val_df = df[df['batch_encoded'].isin(val_batches)]
 test_df = df[df['batch_encoded'].isin(test_batches)]
 
 # PARAM GRID
-param_grid = {
-    'n_estimators': [300],
-    'max_depth': [3, 4],
-    'learning_rate': [0.03, 0.05],
-    'subsample': [0.8],
-    'colsample_bytree': [0.8],
-    'reg_alpha': [0.1],
-    'reg_lambda': [1],
+param_grid_rf = {
+    'n_estimators': [200, 300],
+    'max_depth': [5, 10],
+    'min_samples_split': [2, 5],
+    'min_samples_leaf': [1, 2]
 }
 
 # TUNING REGRESSION
-def tune_reg(X_train, y_train, X_val, y_val):
+def tune_rf_reg(X_train, y_train, X_val, y_val):
     best_params = None
     best_score = float('inf')
 
-    for p in ParameterGrid(param_grid):
-        model = xgb.XGBRegressor(**p, objective='reg:squarederror')
+    for p in ParameterGrid(param_grid_rf):
+        model = RandomForestRegressor(**p, random_state=42, n_jobs=-1)
         model.fit(X_train, y_train)
 
         preds = model.predict(X_val)
@@ -121,19 +103,13 @@ def tune_reg(X_train, y_train, X_val, y_val):
 
     return best_params
 
-# TUNING CLASSIFICATION 
-def tune_clf(X_train, y_train, X_val, y_val):
+# TUNING CLASSIFICATION
+def tune_rf_clf(X_train, y_train, X_val, y_val):
     best_params = None
     best_score = 0
 
-    for p in ParameterGrid(param_grid):
-        model = xgb.XGBClassifier(
-            **p,
-            objective='binary:logistic',
-            eval_metric='logloss',
-            scale_pos_weight=10  
-        )
-
+    for p in ParameterGrid(param_grid_rf):
+        model = RandomForestClassifier(**p, random_state=42, n_jobs=-1)
         model.fit(X_train, y_train)
 
         preds = model.predict(X_val)
@@ -147,7 +123,7 @@ def tune_clf(X_train, y_train, X_val, y_val):
 
 # TRAINING
 print("Tuning Egg Model...")
-best_eggs = tune_reg(
+best_eggs = tune_rf_reg(
     train_df[egg_features],
     train_df['target_eggs'],
     val_df[egg_features],
@@ -155,7 +131,7 @@ best_eggs = tune_reg(
 )
 
 print("Tuning Mortality Model...")
-best_mort = tune_clf(
+best_mort = tune_rf_clf(
     train_df[mort_features],
     train_df['target_mortality'],
     val_df[mort_features],
@@ -163,15 +139,10 @@ best_mort = tune_clf(
 )
 
 # FINAL MODELS
-egg_model = xgb.XGBRegressor(**best_eggs, objective='reg:squarederror')
+egg_model = RandomForestRegressor(**best_eggs, random_state=42, n_jobs=-1)
 egg_model.fit(train_df[egg_features], train_df['target_eggs'])
 
-mort_model = xgb.XGBClassifier(
-    **best_mort,
-    objective='binary:logistic',
-    eval_metric='logloss',
-    scale_pos_weight=10
-)
+mort_model = RandomForestClassifier(**best_mort, random_state=42, n_jobs=-1)
 mort_model.fit(train_df[mort_features], train_df['target_mortality'])
 
 # EVALUATION
@@ -193,14 +164,14 @@ def evaluate_clf(model, X, y):
         "F1": f1_score(y, preds, zero_division=0)
     }
 
-print("\nEgg Model:")
+print("\nEgg RF Model:")
 print(evaluate_reg(egg_model, test_df[egg_features], test_df['target_eggs']))
 
-print("\nMortality Model:")
+print("\nMortality RF Model:")
 print(evaluate_clf(mort_model, test_df[mort_features], test_df['target_mortality']))
 
 # SAVE MODELS
-joblib.dump(egg_model, "egg_model.pkl")
-joblib.dump(mort_model, "mortality_model.pkl")
+joblib.dump(egg_model, "egg_rf_model.pkl")
+joblib.dump(mort_model, "mortality_rf_model.pkl")
 
 print("\nModels saved successfully!")
