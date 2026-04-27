@@ -110,7 +110,7 @@ const BatchDetails = () => {
               <tr>
                 <td>Feed Consumption</td>
                 <td className="value">{batchData.total_feed} kg</td>
-                <td className="trend">Feed per bird: {batchData.feed_per_egg} kg</td>
+                <td className="trend">Feed per bird: {batchData.feed_per_bird} kg</td>
               </tr>
               <tr>
                 <td>Mortality Rate</td>

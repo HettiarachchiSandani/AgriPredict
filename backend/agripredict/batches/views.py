@@ -49,7 +49,15 @@ class BatchViewSet(viewsets.ModelViewSet):
         )
 
         avg_eggs_per_bird = (totals['total_eggs'] or 0) / batch.initialcount if batch.initialcount else 0
-        feed_per_egg = (totals['total_feed'] or 0) / (totals['total_eggs'] or 1)
+        current_birds = (
+            (batch.current_male or 0) +
+            (batch.current_female or 0)
+        )
+
+        feed_efficiency = (
+            (totals['total_feed'] or 0) / current_birds
+            if current_birds else 0
+        )
         mortality_rate = (totals['total_mortality'] or 0) / batch.initialcount if batch.initialcount else 0
 
         data = {
@@ -76,7 +84,7 @@ class BatchViewSet(viewsets.ModelViewSet):
             "total_eggs": totals['total_eggs'] or 0,
             "total_feed": totals['total_feed'] or 0,
             "avg_eggs_per_bird": round(avg_eggs_per_bird, 2),
-            "feed_per_egg": round(feed_per_egg, 2),
+            "feed_per_bird": round(feed_efficiency, 2),
             "mortality_rate": round(mortality_rate * 100, 2)
         }
 
@@ -109,9 +117,13 @@ class BatchViewSet(viewsets.ModelViewSet):
 
             age_days = (today - batch.startdate).days
 
+            current_birds = (
+                (batch.current_male or 0) +
+                (batch.current_female or 0)
+            )
             mortality_rate = (total_mortality / batch.initialcount) * 100
-            feed_efficiency = total_eggs / total_feed if total_feed else 0
-            egg_per_bird = total_eggs / batch.initialcount
+            feed_efficiency = total_feed / current_birds if current_birds else 0
+            egg_per_bird = total_eggs / current_birds if current_birds else 0
 
 
             if age_days < 126:
@@ -120,13 +132,14 @@ class BatchViewSet(viewsets.ModelViewSet):
                 )
 
             elif 126 <= age_days <= 560:
+                feed_score = max(0, 100 - (feed_efficiency * 10))
                 score = (
                     (egg_per_bird * 60) +
-                    (feed_efficiency * 20) -
+                    (feed_score * 0.2) -
                     (mortality_rate * 0.5)
                 )
-
             else:
+                feed_score = max(0, 100 - (feed_efficiency * 10))
                 score = (
                     (egg_per_bird * 40) +
                     (feed_efficiency * 20) -
@@ -147,7 +160,7 @@ class BatchViewSet(viewsets.ModelViewSet):
                 "batchname": batch.batchname,
                 "score": score,
                 "mortality_rate": round(mortality_rate, 2),
-                "feed_efficiency": round(feed_efficiency, 2),
+                "feed_per_bird": round(feed_efficiency, 2),
                 "egg_per_bird": round(egg_per_bird, 2),
                 "age_days": age_days,
                 "status": status
