@@ -269,11 +269,29 @@ class OrderViewSet(viewsets.ModelViewSet):
                     ]], dtype=float)
 
                     raw_pred = float(egg_model.predict(X_egg)[0])
-                    if lag_1_eggs > 0:
-                        adjusted_pred = raw_pred
-                    else:
-                        factor = pred_view.production_factor(age_weeks)
+                    base = lag_1_eggs
+                    factor = pred_view.production_factor(age_weeks)
+
+                    if base == 0:
                         adjusted_pred = raw_pred * factor
+                    else:
+                        ratio = base / total_birds
+
+                        if ratio < 0.1:
+                            max_increase = base * 1.6
+                        elif ratio < 0.5:
+                            max_increase = base * 1.3
+                        elif ratio < 0.85:
+                            max_increase = base * 1.15
+                        else:
+                            max_increase = base * 1.05
+
+                        min_decrease = base * 0.90
+                        adjusted_pred = (0.6 * base) + (0.4 * raw_pred)
+                        adjusted_pred = min(max_increase, max(min_decrease, adjusted_pred))
+
+                    max_possible = total_birds * 0.95
+                    adjusted_pred = min(adjusted_pred, max_possible)
                     pred_eggs = max(0, int(round(adjusted_pred)))
                     next_7_days_predicted_eggs += pred_eggs * 7
 
