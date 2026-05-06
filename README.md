@@ -76,39 +76,61 @@ The system follows a layered client-server architecture consisting of:
 
 ### 2. How to Run
 #### 2.1 Clone Repository
-https://github.com/HettiarachchiSandani/AgriPredict.git
+```bash
+git clone https://github.com/HettiarachchiSandani/AgriPredict.git
+```
 
 #### 2.2 Frontend Setup
 1. Navigate to frontend
+```bash
 cd frontend
+```
 
 2. Install dependencies
+```bash
 npm install
+```
 
 3. Run frontend
+```bash
 npm run dev
+```
 
 4. Frontend runs at
+```bash
 http://localhost:5173/
+```
 
 #### 2.3 Backend Setup
 1. Navigate to backend
+```bash
 cd backend/agripredict
+```
 
 2. Create virtual environment
+```bash
 python -m venv venv
+```
 
-Activate:
+Activate virtual environment:
+
 Windows:
+```bash
 venv\Scripts\activate
+```
 
 Linux/Mac:
+```bash
 source venv/bin/activate
+```
 
 3. Install dependencies
+```bash
 pip install -r requirements.txt
+```
 
 4. Configure environments (.env)
+```bash
 SECRET_KEY=your_secret_key
 DEBUG=True
 DB_NAME=postgres
@@ -116,18 +138,26 @@ DB_USER=postgres
 DB_PASSWORD=your_password
 DB_HOST=your_supabase_host
 DB_PORT=5432
+```
 
 5. Run migration
+```bash
 python manage.py migrate
+```
 
 6. Start backend server
+```bash
 python manage.py runserver
+```
 
 7. Backend runs at:
+```bash
 http://127.0.0.1:8000/
+```
 
 ## License
-This project is developed for academic purposes as part of a final year undergraduate project.
+This project is developed for academic purposes as part of a final year undergraduate project and is not intended for commercial use.
 
 ## Author
-Kalehe Hettiarachchi - BSc(Hons) Computer Science Degree 
+Kalehe Hettiarachchi  
+BSc (Hons) Computer Science
