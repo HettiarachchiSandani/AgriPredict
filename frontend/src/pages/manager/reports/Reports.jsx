@@ -79,7 +79,7 @@ const Reports = () => {
       return;
     }
 
-    if (isDateRequired && (!formData.dateFrom || !formData.dateTo)) {
+    if (!isBatchReport && isDateRequired && (!formData.dateFrom || !formData.dateTo)) {
       alert(`Please select both Start Date and End Date for ${formData.reportType}!`);
       return;
     }
@@ -95,8 +95,8 @@ const Reports = () => {
       const payload = {
         type: reportTypeMap[formData.reportType],
         batchid: showBatchDropdown ? formData.batch || null : null,
-        date_from: formData.dateFrom || undefined,
-        date_to: formData.dateTo || undefined,
+        date_from: isBatchReport ? null : formData.dateFrom || undefined,
+        date_to: isBatchReport ? null : formData.dateTo || undefined,
       };
 
       const data = await generateReportAPI(payload);
@@ -133,8 +133,13 @@ const Reports = () => {
           selectedReport.batch
             ? selectedReport.batch
             : null,
-        date_from: selectedReport.dateFrom || null,
-        date_to: selectedReport.dateTo || null,
+        date_from: selectedReport.reportType === "Batch Report"
+          ? null
+          : selectedReport.dateFrom || null,
+
+        date_to: selectedReport.reportType === "Batch Report"
+          ? null
+          : selectedReport.dateTo || null,
       });
 
       fetchReports();
@@ -150,7 +155,9 @@ const Reports = () => {
     "Daily Operations Report"
   ];
 
-  const isDateRequired = requiresDates.includes(formData.reportType);
+  const isBatchReport = formData.reportType === "Batch Report";
+
+  const isDateRequired = requiresDates.includes(formData.reportType) && !isBatchReport;
 
   const isValid =
     formData.reportType &&
@@ -184,27 +191,31 @@ const Reports = () => {
               </select>
             </div>
 
-            <div className="reports-form-group">
-              <label htmlFor="dateFrom">Date From</label>
-              <input
-                id="dateFrom"
-                type="date"
-                name="dateFrom"
-                value={formData.dateFrom}
-                onChange={handleChange}
-              />
-            </div>
+            {!isBatchReport && (
+              <>
+                <div className="reports-form-group">
+                  <label htmlFor="dateFrom">Date From</label>
+                  <input
+                    id="dateFrom"
+                    type="date"
+                    name="dateFrom"
+                    value={formData.dateFrom}
+                    onChange={handleChange}
+                  />
+                </div>
 
-            <div className="reports-form-group">
-              <label htmlFor="dateTo">Date To</label>
-              <input
-                id="dateTo"
-                type="date"
-                name="dateTo"
-                value={formData.dateTo}
-                onChange={handleChange}
-              />
-            </div>
+                <div className="reports-form-group">
+                  <label htmlFor="dateTo">Date To</label>
+                  <input
+                    id="dateTo"
+                    type="date"
+                    name="dateTo"
+                    value={formData.dateTo}
+                    onChange={handleChange}
+                  />
+                </div>
+              </>
+            )}
 
             {showBatchDropdown && (
               <div className="reports-form-group">
