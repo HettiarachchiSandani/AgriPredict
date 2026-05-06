@@ -58,3 +58,18 @@ def verify_blockchain():
             return False, current_block.recordsid
 
     return True, None
+
+def verify_latest_block():
+    last_block = Records.objects.order_by('-timestamp').first()
+    if not last_block:
+        return True, None
+
+    recalculated_hash = generate_operation_hash(
+        last_block.operationid,
+        last_block.previoushash
+    )
+
+    if last_block.hashvalue != recalculated_hash:
+        return False, last_block.recordsid
+
+    return True, None
