@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./Records.css";
-import { getRecords } from "@/api/recordsAPI";
+import api from "@/api/api";
 import { getBatches } from "@/api/batchAPI";
 import { getDailyOperationByOperationId } from "@/api/dailyOperationsAPI";
 import { formatToSriLankaTime } from "@/utils/time"; 
 
 const RecordPage = () => {
   const [records, setRecords] = useState([]);
+  const [nextPage, setNextPage] = useState(null);
+  const [prevPage, setPrevPage] = useState(null);
   const [batches, setBatches] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [selectedOperation, setSelectedOperation] = useState(null);
@@ -14,20 +16,31 @@ const RecordPage = () => {
   const [loadingRecords, setLoadingRecords] = useState(true);
   const [loadingOperation, setLoadingOperation] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoadingRecords(true);
-      try {
-        const recordsData = await getRecords();
-        setRecords(recordsData);
-        const batchesData = await getBatches();
-        setBatches(batchesData);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
-      setLoadingRecords(false);
-    };
+  const fetchData = async (url = null) => {
+    setLoadingRecords(true);
 
+    try {
+      const response = url
+        ? await api.get(url)
+        : await api.get("reports/records/");
+
+      const data = response.data;
+
+      setRecords(data.results || []);
+      setNextPage(data.next);
+      setPrevPage(data.previous);
+
+      const batchesData = await getBatches();
+      setBatches(batchesData.results || []);
+
+    } catch (err) {
+      console.error("Error fetching data:", err);
+    }
+
+    setLoadingRecords(false);
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -40,7 +53,8 @@ const RecordPage = () => {
     setFilters((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleResetFilters = () => setFilters({ batchId: "", dateFrom: "", dateTo: "" });
+  const handleResetFilters = () =>
+    setFilters({ batchId: "", dateFrom: "", dateTo: "" });
 
   const filteredRecords = records.filter((record) => {
     const recordDate = record.timestamp.split(" ")[0]; 
@@ -74,7 +88,12 @@ const RecordPage = () => {
       <div className="records-filters">
         <div className="filter-item">
           <label htmlFor="batchId">Batch</label>
-          <select id="batchId" name="batchId" value={filters.batchId} onChange={handleFilterChange}>
+          <select
+            id="batchId"
+            name="batchId"
+            value={filters.batchId}
+            onChange={handleFilterChange}
+          >
             <option value="">All Batches</option>
             {batches.map((batch) => (
               <option key={batch.batchid} value={batch.batchid}>
@@ -86,20 +105,35 @@ const RecordPage = () => {
 
         <div className="filter-item">
           <label htmlFor="dateFrom">Start Date</label>
-          <input type="date" id="dateFrom" name="dateFrom" value={filters.dateFrom} onChange={handleFilterChange} />
+          <input
+            type="date"
+            id="dateFrom"
+            name="dateFrom"
+            value={filters.dateFrom}
+            onChange={handleFilterChange}
+          />
         </div>
 
         <div className="filter-item">
           <label htmlFor="dateTo">End Date</label>
-          <input type="date" id="dateTo" name="dateTo" value={filters.dateTo} onChange={handleFilterChange} />
+          <input
+            type="date"
+            id="dateTo"
+            name="dateTo"
+            value={filters.dateTo}
+            onChange={handleFilterChange}
+          />
         </div>
 
         <div className="filter-item">
           <label>Reset</label>
-          <button className="reset-btn" onClick={handleResetFilters}>Reset Filters</button>
+          <button className="reset-btn" onClick={handleResetFilters}>
+            Reset Filters
+          </button>
         </div>
       </div>
 
+      {/* TABLE */}
       <div className="records-table-container">
         {filteredRecords.length === 0 ? (
           <div className="no-records">No Records Found</div>
@@ -112,9 +146,13 @@ const RecordPage = () => {
                 <th>Timestamp</th>
               </tr>
             </thead>
+
             <tbody>
               {filteredRecords.map((record) => (
-                <tr key={record.recordsid} onClick={() => handleSelectRecord(record)}>
+                <tr
+                  key={record.recordsid}
+                  onClick={() => handleSelectRecord(record)}
+                >
                   <td>{record.recordsid}</td>
                   <td>{record.batchid}</td>
                   <td>{formatToSriLankaTime(record.timestamp)}</td>
@@ -125,11 +163,27 @@ const RecordPage = () => {
         )}
       </div>
 
+      <div className="pagination">
+        <button disabled={!prevPage} onClick={() => fetchData(prevPage)}>
+          Previous
+        </button>
+
+        <button disabled={!nextPage} onClick={() => fetchData(nextPage)}>
+          Next
+        </button>
+      </div>
+
       {selectedRecord && (
         <div className="record-panel">
           <div className="panel-header">
             <h2>Record Details</h2>
-            <span className="close-btn" onClick={() => { setSelectedRecord(null); setSelectedOperation(null); }}>
+            <span
+              className="close-btn"
+              onClick={() => {
+                setSelectedRecord(null);
+                setSelectedOperation(null);
+              }}
+            >
               &times;
             </span>
           </div>
