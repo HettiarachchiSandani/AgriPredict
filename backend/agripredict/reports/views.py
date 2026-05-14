@@ -16,7 +16,8 @@ from batches.models import DailyOperations, Batch
 from feed.models import FeedStock
 from orders.models import Order
 from django.utils.dateparse import parse_date
-from django.http import FileResponse, Http404  
+from django.http import FileResponse, Http404 
+from rest_framework.pagination import PageNumberPagination 
 
 class ReportViewSet(viewsets.ModelViewSet):
     queryset = Report.objects.all().order_by("-generateddate")
@@ -322,10 +323,20 @@ class ReportViewSet(viewsets.ModelViewSet):
 
         return Response({"data": data})
 
+class RecordPagination(PageNumberPagination):
+    page_size = 20
+
 class RecordViewSet(ReadOnlyModelViewSet):
-    queryset = Records.objects.all().order_by('-timestamp')
+    queryset = Records.objects.select_related(
+        'batchid',
+        'operationid',
+        'operationid__entered_by'
+    ).all().order_by('-timestamp')
+
     serializer_class = RecordSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrManager]
+
+    pagination_class = RecordPagination
 
     @action(detail=False, methods=["get"])
     def verify(self, request):
