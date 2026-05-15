@@ -41,7 +41,7 @@ const BuyersList = () => {
         company: buyer.company || "",
         address: buyer.address || "",
         note: buyer.note || "",
-        status: buyer.is_active ? "Active" : "Inactive",
+        status: (buyer.user_details?.is_active ?? buyer.is_active) ? "Active" : "Inactive",
         buyerid: buyer.buyerid,
       });
     } else {
@@ -123,7 +123,11 @@ const BuyersList = () => {
   const filteredBuyers = buyers
     .filter((b) => {
       const fullName = `${b.user_details?.firstname || b.firstname || ""} ${b.user_details?.lastname || b.lastname || ""}`.toLowerCase();
-      const statusMatch = statusFilter ? (b.is_active ? "Active" : "Inactive") === statusFilter : true;
+      const activeStatus = b.user_details?.is_active ?? b.is_active ?? false;
+
+      const statusMatch = statusFilter
+        ? (activeStatus ? "Active" : "Inactive") === statusFilter
+        : true;
       return fullName.includes(searchTerm.toLowerCase()) && statusMatch;
     })
     .sort((a, b) => (a.buyerid < b.buyerid ? -1 : a.buyerid > b.buyerid ? 1 : 0));
@@ -177,7 +181,7 @@ const BuyersList = () => {
           <tbody>
             {filteredBuyers.length ? (
               filteredBuyers.map((b) => {
-                const isActive = b.is_active ?? b.user_details?.is_active ?? false;
+                const isActive = b.user_details?.is_active ?? b.is_active ?? false;
                 return (
                   <tr key={b.buyerid}>
                     <td>{b.buyerid}</td>
