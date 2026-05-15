@@ -33,11 +33,7 @@ const RecordPage = () => {
     setPrevPage(data.previous);
 
     const batchesData = await getBatches();
-    console.log("BATCH API FULL RESPONSE:", batchesData);
     setBatches(batchesData || []);
-
-    console.log("FIRST RECORD:", recordsData?.[0]);
-    console.log("FIRST BATCH:", batchesData?.[0]);
 
   } catch (err) {
     console.error("Error fetching data:", err);
