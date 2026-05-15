@@ -17,28 +17,34 @@ const RecordPage = () => {
   const [loadingOperation, setLoadingOperation] = useState(false);
 
   const fetchData = async (url = null) => {
-    setLoadingRecords(true);
+  setLoadingRecords(true);
 
-    try {
-      const response = url
-        ? await api.get(url)
-        : await api.get("reports/records/");
+  try {
+    const response = url
+      ? await api.get(url)
+      : await api.get("reports/records/");
 
-      const data = response.data;
+    const data = response.data;
 
-      setRecords(data.results || []);
-      setNextPage(data.next);
-      setPrevPage(data.previous);
+    const recordsData = data.results || [];
 
-      const batchesData = await getBatches();
-      setBatches(batchesData.results || []);
+    setRecords(recordsData);
+    setNextPage(data.next);
+    setPrevPage(data.previous);
 
-    } catch (err) {
-      console.error("Error fetching data:", err);
-    }
+    const batchesData = await getBatches();
+    console.log("BATCH API FULL RESPONSE:", batchesData);
+    setBatches(batchesData || []);
 
-    setLoadingRecords(false);
-  };
+    console.log("FIRST RECORD:", recordsData?.[0]);
+    console.log("FIRST BATCH:", batchesData?.[0]);
+
+  } catch (err) {
+    console.error("Error fetching data:", err);
+  }
+
+  setLoadingRecords(false);
+};
 
   useEffect(() => {
     fetchData();
@@ -58,7 +64,9 @@ const RecordPage = () => {
 
   const filteredRecords = records.filter((record) => {
     const recordDate = record.timestamp.split(" ")[0]; 
-    const matchBatch = filters.batchId ? record.batchid === filters.batchId : true;
+    const matchBatch = filters.batchId
+    ? String(record.batchid) === String(filters.batchId)
+    : true;
     const matchDateFrom = filters.dateFrom ? recordDate >= filters.dateFrom : true;
     const matchDateTo = filters.dateTo ? recordDate <= filters.dateTo : true;
     return matchBatch && matchDateFrom && matchDateTo;
@@ -97,7 +105,7 @@ const RecordPage = () => {
             <option value="">All Batches</option>
             {batches.map((batch) => (
               <option key={batch.batchid} value={batch.batchid}>
-                {batch.batchname}
+                {batch.batchid || batch.batchname}
               </option>
             ))}
           </select>
